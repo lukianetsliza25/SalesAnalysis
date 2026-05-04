@@ -1,4 +1,5 @@
-﻿using System;
+﻿// SalesAnalysis.Core/Models/MonthlyKpiData.cs
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

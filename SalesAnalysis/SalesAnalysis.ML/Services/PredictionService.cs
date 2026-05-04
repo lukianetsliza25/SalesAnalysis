@@ -30,7 +30,7 @@ namespace SalesAnalysis.ML.Services
             var pipeline =
                 // Об’єднання індексу часу у вектор ознак
                 MLContext.Transforms.Concatenate(
-                    "Features", nameof(SalesDataPoint.Year))
+                    "Features", nameof(SalesDataPoint.TimeIndex))
 
                 // Нормалізація ознак для стабільності навчання
                 .Append(MLContext.Transforms.NormalizeMinMax("Features"))
@@ -65,7 +65,7 @@ namespace SalesAnalysis.ML.Services
             // Формування вхідних даних для прогнозування
             var input = new SalesDataPoint
             {
-                Year = nextTimeIndex
+                TimeIndex = nextTimeIndex
             };
 
             // Повернення прогнозного значення
@@ -93,7 +93,7 @@ namespace SalesAnalysis.ML.Services
 
                 var input = new SalesDataPoint
                 {
-                    Year = nextIndex
+                    TimeIndex = nextIndex
                 };
 
                 // Отримання прогнозного значення

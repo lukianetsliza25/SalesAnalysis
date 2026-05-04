@@ -1,14 +1,110 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\\u041C\u043E\u0457 \u0444\u0430\u0439\u043B\u0438\\\u0423\u043D\u0456\u0432\u0435\u0440\\4 \u043A\u0443\u0440\u0441\\\u041A\u0443\u0440\u0441\u043E\u0432\u0430 \u0440\u043E\u0431\u043E\u0442\u0430 2\\SalesAnalysis\\",
+  "WorkspaceRootPath": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|c:\\\u043C\u043E\u0457 \u0444\u0430\u0439\u043B\u0438\\\u0443\u043D\u0456\u0432\u0435\u0440\\4 \u043A\u0443\u0440\u0441\\\u043A\u0443\u0440\u0441\u043E\u0432\u0430 \u0440\u043E\u0431\u043E\u0442\u0430 2\\salesanalysis\\salesanalysis.core\\models\\clusteredcustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A206FBEA-A6BF-4FAB-A83F-E73F5B965935}|SalesAnalysis.Data\\SalesAnalysis.Data.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.data\\importservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A206FBEA-A6BF-4FAB-A83F-E73F5B965935}|SalesAnalysis.Data\\SalesAnalysis.Data.csproj|solutionrelative:salesanalysis.data\\importservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A206FBEA-A6BF-4FAB-A83F-E73F5B965935}|SalesAnalysis.Data\\SalesAnalysis.Data.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.data\\salesdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A206FBEA-A6BF-4FAB-A83F-E73F5B965935}|SalesAnalysis.Data\\SalesAnalysis.Data.csproj|solutionrelative:salesanalysis.data\\salesdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|solutionrelative:salesanalysis.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A206FBEA-A6BF-4FAB-A83F-E73F5B965935}|SalesAnalysis.Data\\SalesAnalysis.Data.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.data\\services\\analysisservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A206FBEA-A6BF-4FAB-A83F-E73F5B965935}|SalesAnalysis.Data\\SalesAnalysis.Data.csproj|solutionrelative:salesanalysis.data\\services\\analysisservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.web\\views\\import\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|solutionrelative:salesanalysis.web\\views\\import\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.web\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|solutionrelative:salesanalysis.web\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.web\\controllers\\importcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|solutionrelative:salesanalysis.web\\controllers\\importcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.web\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|solutionrelative:salesanalysis.web\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.web\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|solutionrelative:salesanalysis.web\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B620E3A-E441-4398-8093-EED6001A0970}|SalesAnalysis.ML\\SalesAnalysis.ML.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.ml\\services\\predictionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B620E3A-E441-4398-8093-EED6001A0970}|SalesAnalysis.ML\\SalesAnalysis.ML.csproj|solutionrelative:salesanalysis.ml\\services\\predictionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.core\\models\\salesdatapoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|solutionrelative:salesanalysis.core\\models\\salesdatapoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.core\\models\\monthlykpidata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|solutionrelative:salesanalysis.core\\models\\monthlykpidata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.core\\models\\customerdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|solutionrelative:salesanalysis.core\\models\\customerdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.core\\models\\clusteredcustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|solutionrelative:salesanalysis.core\\models\\clusteredcustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|c:\\\u043C\u043E\u0457 \u0444\u0430\u0439\u043B\u0438\\\u0443\u043D\u0456\u0432\u0435\u0440\\4 \u043A\u0443\u0440\u0441\\\u043A\u0443\u0440\u0441\u043E\u0432\u0430 \u0440\u043E\u0431\u043E\u0442\u0430 2\\salesanalysis\\salesanalysis.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|solutionrelative:salesanalysis.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.core\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|solutionrelative:salesanalysis.core\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.core\\entities\\savedanalysis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|solutionrelative:salesanalysis.core\\entities\\savedanalysis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.core\\entities\\transaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|solutionrelative:salesanalysis.core\\entities\\transaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A206FBEA-A6BF-4FAB-A83F-E73F5B965935}|SalesAnalysis.Data\\SalesAnalysis.Data.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.data\\migrations\\20260416184649_initialcreate1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A206FBEA-A6BF-4FAB-A83F-E73F5B965935}|SalesAnalysis.Data\\SalesAnalysis.Data.csproj|solutionrelative:salesanalysis.data\\migrations\\20260416184649_initialcreate1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.web\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|solutionrelative:salesanalysis.web\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3611ECF4-534C-4F6B-BE4B-4D9826792941}|SalesAnalysis.Web\\SalesAnalysis.Web.csproj|solutionrelative:salesanalysis.web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A206FBEA-A6BF-4FAB-A83F-E73F5B965935}|SalesAnalysis.Data\\SalesAnalysis.Data.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.data\\salesanalysis.data.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A206FBEA-A6BF-4FAB-A83F-E73F5B965935}|SalesAnalysis.Data\\SalesAnalysis.Data.csproj|solutionrelative:salesanalysis.data\\salesanalysis.data.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A206FBEA-A6BF-4FAB-A83F-E73F5B965935}|SalesAnalysis.Data\\SalesAnalysis.Data.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.data\\migrations\\salesdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A206FBEA-A6BF-4FAB-A83F-E73F5B965935}|SalesAnalysis.Data\\SalesAnalysis.Data.csproj|solutionrelative:salesanalysis.data\\migrations\\salesdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A206FBEA-A6BF-4FAB-A83F-E73F5B965935}|SalesAnalysis.Data\\SalesAnalysis.Data.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.data\\migrations\\20260416164021_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A206FBEA-A6BF-4FAB-A83F-E73F5B965935}|SalesAnalysis.Data\\SalesAnalysis.Data.csproj|solutionrelative:salesanalysis.data\\migrations\\20260416164021_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{282F3D43-586E-4AFC-A075-B75BCC6E5A89}|SalesAnalysis.Tests\\SalesAnalysis.Tests.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.tests\\predictionservice_tests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{282F3D43-586E-4AFC-A075-B75BCC6E5A89}|SalesAnalysis.Tests\\SalesAnalysis.Tests.csproj|solutionrelative:salesanalysis.tests\\predictionservice_tests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{282F3D43-586E-4AFC-A075-B75BCC6E5A89}|SalesAnalysis.Tests\\SalesAnalysis.Tests.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.tests\\analysisservice_tests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{282F3D43-586E-4AFC-A075-B75BCC6E5A89}|SalesAnalysis.Tests\\SalesAnalysis.Tests.csproj|solutionrelative:salesanalysis.tests\\analysisservice_tests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|c:\\users\\lukan\\onedrive\\documentos\\github\\salesanalysis\\salesanalysis\\salesanalysis.core\\salesanalysis.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{701D5389-176F-47CB-B5A3-422554E8CBBE}|SalesAnalysis.Core\\SalesAnalysis.Core.csproj|solutionrelative:salesanalysis.core\\salesanalysis.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,33 +114,320 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ClusteredCustomer.cs",
-              "DocumentMoniker": "C:\\\u041C\u043E\u0457 \u0444\u0430\u0439\u043B\u0438\\\u0423\u043D\u0456\u0432\u0435\u0440\\4 \u043A\u0443\u0440\u0441\\\u041A\u0443\u0440\u0441\u043E\u0432\u0430 \u0440\u043E\u0431\u043E\u0442\u0430 2\\SalesAnalysis\\SalesAnalysis.Core\\Models\\ClusteredCustomer.cs",
-              "RelativeDocumentMoniker": "SalesAnalysis.Core\\Models\\ClusteredCustomer.cs",
-              "ToolTip": "C:\\\u041C\u043E\u0457 \u0444\u0430\u0439\u043B\u0438\\\u0423\u043D\u0456\u0432\u0435\u0440\\4 \u043A\u0443\u0440\u0441\\\u041A\u0443\u0440\u0441\u043E\u0432\u0430 \u0440\u043E\u0431\u043E\u0442\u0430 2\\SalesAnalysis\\SalesAnalysis.Core\\Models\\ClusteredCustomer.cs",
-              "RelativeToolTip": "SalesAnalysis.Core\\Models\\ClusteredCustomer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\Views\\Dashboard\\Index.cshtml",
+              "RelativeDocumentMoniker": "SalesAnalysis.Web\\Views\\Dashboard\\Index.cshtml",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\Views\\Dashboard\\Index.cshtml",
+              "RelativeToolTip": "SalesAnalysis.Web\\Views\\Dashboard\\Index.cshtml",
+              "ViewState": "AgIAAPwAAAAAAAAAAAAQwCMBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-03T20:44:04.537Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ImportController.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\Controllers\\ImportController.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Web\\Controllers\\ImportController.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\Controllers\\ImportController.cs",
+              "RelativeToolTip": "SalesAnalysis.Web\\Controllers\\ImportController.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAcwDsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-29T19:40:34.967Z",
+              "WhenOpened": "2026-05-03T20:43:40.966Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Web\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "SalesAnalysis.Web\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-03T20:43:24.484Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AnalysisService.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Data\\Services\\AnalysisService.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Data\\Services\\AnalysisService.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Data\\Services\\AnalysisService.cs",
+              "RelativeToolTip": "SalesAnalysis.Data\\Services\\AnalysisService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T14:35:52.285Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ImportService.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Data\\ImportService.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Data\\ImportService.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Data\\ImportService.cs",
+              "RelativeToolTip": "SalesAnalysis.Data\\ImportService.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAswHsAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T14:36:01.931Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\\u041C\u043E\u0457 \u0444\u0430\u0439\u043B\u0438\\\u0423\u043D\u0456\u0432\u0435\u0440\\4 \u043A\u0443\u0440\u0441\\\u041A\u0443\u0440\u0441\u043E\u0432\u0430 \u0440\u043E\u0431\u043E\u0442\u0430 2\\SalesAnalysis\\SalesAnalysis.Web\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\Program.cs",
               "RelativeDocumentMoniker": "SalesAnalysis.Web\\Program.cs",
-              "ToolTip": "C:\\\u041C\u043E\u0457 \u0444\u0430\u0439\u043B\u0438\\\u0423\u043D\u0456\u0432\u0435\u0440\\4 \u043A\u0443\u0440\u0441\\\u041A\u0443\u0440\u0441\u043E\u0432\u0430 \u0440\u043E\u0431\u043E\u0442\u0430 2\\SalesAnalysis\\SalesAnalysis.Web\\Program.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\Program.cs",
               "RelativeToolTip": "SalesAnalysis.Web\\Program.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAcwD0AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAB4AAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-07T17:15:01.503Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-07T17:15:01.503Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SalesDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Data\\SalesDbContext.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Data\\SalesDbContext.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Data\\SalesDbContext.cs",
+              "RelativeToolTip": "SalesAnalysis.Data\\SalesDbContext.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAA3wBAAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T14:36:13.187Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\Views\\Import\\Index.cshtml",
+              "RelativeDocumentMoniker": "SalesAnalysis.Web\\Views\\Import\\Index.cshtml",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\Views\\Import\\Index.cshtml",
+              "RelativeToolTip": "SalesAnalysis.Web\\Views\\Import\\Index.cshtml",
+              "ViewState": "AgIAAGQAAAAAAAAAAAAiwIoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-03T20:44:17.606Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "SalesDataPoint.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\Models\\SalesDataPoint.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Core\\Models\\SalesDataPoint.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\Models\\SalesDataPoint.cs",
+              "RelativeToolTip": "SalesAnalysis.Core\\Models\\SalesDataPoint.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T14:34:10.357Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MonthlyKpiData.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\Models\\MonthlyKpiData.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Core\\Models\\MonthlyKpiData.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\Models\\MonthlyKpiData.cs",
+              "RelativeToolTip": "SalesAnalysis.Core\\Models\\MonthlyKpiData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T14:33:16.091Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PredictionService.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.ML\\Services\\PredictionService.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.ML\\Services\\PredictionService.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.ML\\Services\\PredictionService.cs",
+              "RelativeToolTip": "SalesAnalysis.ML\\Services\\PredictionService.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAcwG8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T17:01:13.57Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DashboardController.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\Controllers\\DashboardController.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Web\\Controllers\\DashboardController.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\Controllers\\DashboardController.cs",
+              "RelativeToolTip": "SalesAnalysis.Web\\Controllers\\DashboardController.cs",
+              "ViewState": "AgIAAAoBAAAAAAAAAAAiwDABAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T17:02:16.429Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "CustomerData.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\Models\\CustomerData.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Core\\Models\\CustomerData.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\Models\\CustomerData.cs",
+              "RelativeToolTip": "SalesAnalysis.Core\\Models\\CustomerData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T14:33:07.637Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ClusteredCustomer.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\Models\\ClusteredCustomer.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Core\\Models\\ClusteredCustomer.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\Models\\ClusteredCustomer.cs",
+              "RelativeToolTip": "SalesAnalysis.Core\\Models\\ClusteredCustomer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T19:40:34.967Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Core\\Entities\\User.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\Entities\\User.cs",
+              "RelativeToolTip": "SalesAnalysis.Core\\Entities\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T15:07:30.705Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "SavedAnalysis.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\Entities\\SavedAnalysis.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Core\\Entities\\SavedAnalysis.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\Entities\\SavedAnalysis.cs",
+              "RelativeToolTip": "SalesAnalysis.Core\\Entities\\SavedAnalysis.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T15:09:10.015Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Transaction.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\Entities\\Transaction.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Core\\Entities\\Transaction.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\Entities\\Transaction.cs",
+              "RelativeToolTip": "SalesAnalysis.Core\\Entities\\Transaction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T14:34:25.529Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "20260416184649_InitialCreate1.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Data\\Migrations\\20260416184649_InitialCreate1.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Data\\Migrations\\20260416184649_InitialCreate1.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Data\\Migrations\\20260416184649_InitialCreate1.cs",
+              "RelativeToolTip": "SalesAnalysis.Data\\Migrations\\20260416184649_InitialCreate1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T18:46:50.437Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "SalesAnalysis.Web\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\appsettings.Development.json",
+              "RelativeToolTip": "SalesAnalysis.Web\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-27T19:27:57.985Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\appsettings.json",
+              "RelativeDocumentMoniker": "SalesAnalysis.Web\\appsettings.json",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Web\\appsettings.json",
+              "RelativeToolTip": "SalesAnalysis.Web\\appsettings.json",
+              "ViewState": "AgIAAAMAAAAAAAAAAADwvw0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-16T15:14:51.828Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "PredictionService_Tests.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Tests\\PredictionService_Tests.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Tests\\PredictionService_Tests.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Tests\\PredictionService_Tests.cs",
+              "RelativeToolTip": "SalesAnalysis.Tests\\PredictionService_Tests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T17:03:20.514Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "SalesDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Data\\Migrations\\SalesDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Data\\Migrations\\SalesDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Data\\Migrations\\SalesDbContextModelSnapshot.cs",
+              "RelativeToolTip": "SalesAnalysis.Data\\Migrations\\SalesDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAiwIgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T16:40:34.437Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "SalesAnalysis.Data.csproj",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Data\\SalesAnalysis.Data.csproj",
+              "RelativeDocumentMoniker": "SalesAnalysis.Data\\SalesAnalysis.Data.csproj",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Data\\SalesAnalysis.Data.csproj",
+              "RelativeToolTip": "SalesAnalysis.Data\\SalesAnalysis.Data.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-04-16T18:42:31.454Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "20260416164021_InitialCreate.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Data\\Migrations\\20260416164021_InitialCreate.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Data\\Migrations\\20260416164021_InitialCreate.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Data\\Migrations\\20260416164021_InitialCreate.cs",
+              "RelativeToolTip": "SalesAnalysis.Data\\Migrations\\20260416164021_InitialCreate.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAcwFsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T16:40:22.018Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "AnalysisService_Tests.cs",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Tests\\AnalysisService_Tests.cs",
+              "RelativeDocumentMoniker": "SalesAnalysis.Tests\\AnalysisService_Tests.cs",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Tests\\AnalysisService_Tests.cs",
+              "RelativeToolTip": "SalesAnalysis.Tests\\AnalysisService_Tests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T17:03:01.793Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "SalesAnalysis.Core.csproj",
+              "DocumentMoniker": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\SalesAnalysis.Core.csproj",
+              "RelativeDocumentMoniker": "SalesAnalysis.Core\\SalesAnalysis.Core.csproj",
+              "ToolTip": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\SalesAnalysis.Core.csproj",
+              "RelativeToolTip": "SalesAnalysis.Core\\SalesAnalysis.Core.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-04-16T15:04:05.437Z"
             }
           ]
         }

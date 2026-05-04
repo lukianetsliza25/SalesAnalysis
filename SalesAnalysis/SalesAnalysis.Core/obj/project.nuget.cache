@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cQGg2RqoFzE=",
+  "dgSpecHash": "BcJJBRAZnn8=",
   "success": true,
-  "projectFilePath": "C:\\Мої файли\\Універ\\4 курс\\Курсова робота 2\\SalesAnalysis\\SalesAnalysis.Core\\SalesAnalysis.Core.csproj",
+  "projectFilePath": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\SalesAnalysis.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lukan\\.nuget\\packages\\csvhelper\\33.1.0\\csvhelper.33.1.0.nupkg.sha512",
     "C:\\Users\\lukan\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
@@ -35,6 +35,8 @@
     "C:\\Users\\lukan\\.nuget\\packages\\microsoft.ml.dataview\\5.0.0\\microsoft.ml.dataview.5.0.0.nupkg.sha512",
     "C:\\Users\\lukan\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\lukan\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\lukan\\.nuget\\packages\\npgsql\\8.0.3\\npgsql.8.0.3.nupkg.sha512",
+    "C:\\Users\\lukan\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\8.0.4\\npgsql.entityframeworkcore.postgresql.8.0.4.nupkg.sha512",
     "C:\\Users\\lukan\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.6\\sqlitepclraw.bundle_e_sqlite3.2.1.6.nupkg.sha512",
     "C:\\Users\\lukan\\.nuget\\packages\\sqlitepclraw.core\\2.1.6\\sqlitepclraw.core.2.1.6.nupkg.sha512",
     "C:\\Users\\lukan\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.6\\sqlitepclraw.lib.e_sqlite3.2.1.6.nupkg.sha512",
