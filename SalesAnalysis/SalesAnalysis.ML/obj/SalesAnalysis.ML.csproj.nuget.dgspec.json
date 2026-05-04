@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Мої файли\\Універ\\4 курс\\Курсова робота 2\\SalesAnalysis\\SalesAnalysis.ML\\SalesAnalysis.ML.csproj": {}
+    "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.ML\\SalesAnalysis.ML.csproj": {}
   },
   "projects": {
-    "C:\\Мої файли\\Універ\\4 курс\\Курсова робота 2\\SalesAnalysis\\SalesAnalysis.Core\\SalesAnalysis.Core.csproj": {
+    "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\SalesAnalysis.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Мої файли\\Універ\\4 курс\\Курсова робота 2\\SalesAnalysis\\SalesAnalysis.Core\\SalesAnalysis.Core.csproj",
+        "projectUniqueName": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\SalesAnalysis.Core.csproj",
         "projectName": "SalesAnalysis.Core",
-        "projectPath": "C:\\Мої файли\\Універ\\4 курс\\Курсова робота 2\\SalesAnalysis\\SalesAnalysis.Core\\SalesAnalysis.Core.csproj",
+        "projectPath": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\SalesAnalysis.Core.csproj",
         "packagesPath": "C:\\Users\\lukan\\.nuget\\packages\\",
-        "outputPath": "C:\\Мої файли\\Універ\\4 курс\\Курсова робота 2\\SalesAnalysis\\SalesAnalysis.Core\\obj\\",
+        "outputPath": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -67,6 +67,10 @@
             "Microsoft.ML": {
               "target": "Package",
               "version": "[5.0.0, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.4, )"
             }
           },
           "imports": [
@@ -103,14 +107,14 @@
         }
       }
     },
-    "C:\\Мої файли\\Універ\\4 курс\\Курсова робота 2\\SalesAnalysis\\SalesAnalysis.ML\\SalesAnalysis.ML.csproj": {
+    "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.ML\\SalesAnalysis.ML.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Мої файли\\Універ\\4 курс\\Курсова робота 2\\SalesAnalysis\\SalesAnalysis.ML\\SalesAnalysis.ML.csproj",
+        "projectUniqueName": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.ML\\SalesAnalysis.ML.csproj",
         "projectName": "SalesAnalysis.ML",
-        "projectPath": "C:\\Мої файли\\Універ\\4 курс\\Курсова робота 2\\SalesAnalysis\\SalesAnalysis.ML\\SalesAnalysis.ML.csproj",
+        "projectPath": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.ML\\SalesAnalysis.ML.csproj",
         "packagesPath": "C:\\Users\\lukan\\.nuget\\packages\\",
-        "outputPath": "C:\\Мої файли\\Універ\\4 курс\\Курсова робота 2\\SalesAnalysis\\SalesAnalysis.ML\\obj\\",
+        "outputPath": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.ML\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -131,8 +135,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Мої файли\\Універ\\4 курс\\Курсова робота 2\\SalesAnalysis\\SalesAnalysis.Core\\SalesAnalysis.Core.csproj": {
-                "projectPath": "C:\\Мої файли\\Універ\\4 курс\\Курсова робота 2\\SalesAnalysis\\SalesAnalysis.Core\\SalesAnalysis.Core.csproj"
+              "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\SalesAnalysis.Core.csproj": {
+                "projectPath": "C:\\Users\\lukan\\OneDrive\\Documentos\\GitHub\\SalesAnalysis\\SalesAnalysis\\SalesAnalysis.Core\\SalesAnalysis.Core.csproj"
               }
             }
           }

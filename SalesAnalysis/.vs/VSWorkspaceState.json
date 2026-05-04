@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\SalesAnalysis.Core",
+    "\\SalesAnalysis.Core\\Models",
+    "\\SalesAnalysis.Web",
+    "\\SalesAnalysis.Web\\Controllers",
+    "\\SalesAnalysis.Web\\Models",
+    "\\SalesAnalysis.Web\\Views",
+    "\\SalesAnalysis.Web\\Views\\Dashboard",
+    "\\SalesAnalysis.Web\\Views\\Home",
+    "\\SalesAnalysis.Web\\Views\\Import"
+  ],
+  "PreviewInSolutionExplorer": false
+}

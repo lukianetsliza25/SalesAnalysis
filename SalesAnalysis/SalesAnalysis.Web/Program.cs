@@ -12,7 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<SalesDbContext>(options =>
 {
     // Фінальний рядок підключення для SQLite (можна залишити Data Source=SalesData.db)
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseNpgsql(
+    builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 // --- 2. Реєстрація Сервісів (Dependency Injection) ---
@@ -27,7 +28,7 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(optio
 {
     options.MultipartBodyLengthLimit = 104857600; // 100 MB
 });
-
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var app = builder.Build();
 
 // --- 3. ГАРАНТОВАНЕ СТВОРЕННЯ БАЗИ ДАНИХ ---
@@ -51,7 +52,7 @@ void CreateDbIfNotExists(IHost host)
         try
         {
             var context = services.GetRequiredService<SalesDbContext>();
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
         }
         catch (Exception ex)
         {

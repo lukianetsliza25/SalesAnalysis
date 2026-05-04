@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using SalesAnalysis.Core.Entities;
+using System.Text.Json;
 
 namespace SalesAnalysis.Data.Services
 {
@@ -116,7 +118,44 @@ namespace SalesAnalysis.Data.Services
                 return rfmData;
             }
         }
+        // Метод агрегації продажів для КОНКРЕТНОГО товару
+        public async Task<List<SalesDataPoint>> GetMonthlySalesByProductAsync(string productId)
+        {
+            using var context = GetContext();
+            var all = await context.Transactions
+                .Where(t => t.ProductId == productId)
+                .ToListAsync();
 
+            if (!all.Any()) return new List<SalesDataPoint>();
+
+            return all
+                .Select(t => new { t.Revenue, Date = t.Date })
+                .GroupBy(t => new { t.Date.Year, t.Date.Month })
+                .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
+                .Select((g, index) => new SalesDataPoint
+                {
+                    TimeIndex = index + 1,
+                    SalesAmount = (float)g.Sum(t => t.Revenue)
+                })
+                .ToList();
+        }
+
+
+        public async Task SaveAnalysisResultAsync(int userId, string productId, string type, object result)
+        {
+            using var context = GetContext();
+            var saved = new SavedAnalysis
+            {
+                UserId = userId,
+                ProductId = productId, // null якщо загальний аналіз
+                AnalysisType = type,   // наприклад "SalesForecast" або "Clustering"
+                ResultJson = JsonSerializer.Serialize(result),
+                CreatedAt = DateTime.UtcNow
+            };
+
+            context.SavedAnalyses.Add(saved);
+            await context.SaveChangesAsync();
+        }
         // -----------------------------------------------------
         // Метод агрегації продажів за місяцями
 
@@ -151,7 +190,7 @@ namespace SalesAnalysis.Data.Services
                     .Select((g, index) => new SalesDataPoint
                     {
                         // Індекс періоду (використовується для прогнозування)
-                        Year = index + 1,
+                        TimeIndex = index + 1,
 
                         // Сумарний обсяг продажів за місяць
                         SalesAmount = (float)g.Sum(t => t.Revenue)

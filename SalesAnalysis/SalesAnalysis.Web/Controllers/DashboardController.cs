@@ -78,8 +78,8 @@ public class DashboardController : Controller
             bestMonth = best.SalesAmount;
             worstMonth = worst.SalesAmount;
 
-            bestMonthName = $"Місяць #{best.Year}";
-            worstMonthName = $"Місяць #{worst.Year}";
+            bestMonthName = $"Місяць #{best.TimeIndex}";
+            worstMonthName = $"Місяць #{worst.TimeIndex}";
         }
 
         // --- Передаємо у View --- //
@@ -268,7 +268,7 @@ public class DashboardController : Controller
 
         if (monthlyData.Count >= 4)
         {
-            var nextTimeIndex = monthlyData.Max(d => d.Year) + 1;
+            var nextTimeIndex = monthlyData.Max(d => d.TimeIndex) + 1;
 
             try
             {

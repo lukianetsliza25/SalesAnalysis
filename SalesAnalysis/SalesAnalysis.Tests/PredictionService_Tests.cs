@@ -28,9 +28,9 @@ public class PredictionServiceTests
         // Формування недостатнього набору даних (менше 4 точок)
         var data = new List<SalesDataPoint>
         {
-            new SalesDataPoint { Year = 1, SalesAmount = 100 },
-            new SalesDataPoint { Year = 2, SalesAmount = 200 },
-            new SalesDataPoint { Year = 3, SalesAmount = 300 }
+            new SalesDataPoint { TimeIndex = 1, SalesAmount = 100 },
+            new SalesDataPoint { TimeIndex = 2, SalesAmount = 200 },
+            new SalesDataPoint { TimeIndex = 3, SalesAmount = 300 }
         };
 
         // Перетворення даних у формат IDataView для ML.NET
@@ -50,10 +50,10 @@ public class PredictionServiceTests
         // Формування коректного набору даних для навчання моделі
         var data = new List<SalesDataPoint>
         {
-            new SalesDataPoint { Year = 1, SalesAmount = 100 },
-            new SalesDataPoint { Year = 2, SalesAmount = 150 },
-            new SalesDataPoint { Year = 3, SalesAmount = 200 },
-            new SalesDataPoint { Year = 4, SalesAmount = 250 }
+            new SalesDataPoint { TimeIndex = 1, SalesAmount = 100 },
+            new SalesDataPoint { TimeIndex = 2, SalesAmount = 150 },
+            new SalesDataPoint { TimeIndex = 3, SalesAmount = 200 },
+            new SalesDataPoint { TimeIndex = 4, SalesAmount = 250 }
         };
 
         // Навчання моделі прогнозування

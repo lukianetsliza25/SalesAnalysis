@@ -13,3 +13,19 @@ C:\Мої файли\Універ\4 курс\Курсова робота 2\Sales
 C:\Мої файли\Універ\4 курс\Курсова робота 2\SalesAnalysis\SalesAnalysis.ML\obj\Debug\net8.0\refint\SalesAnalysis.ML.dll
 C:\Мої файли\Універ\4 курс\Курсова робота 2\SalesAnalysis\SalesAnalysis.ML\obj\Debug\net8.0\SalesAnalysis.ML.pdb
 C:\Мої файли\Універ\4 курс\Курсова робота 2\SalesAnalysis\SalesAnalysis.ML\obj\Debug\net8.0\ref\SalesAnalysis.ML.dll
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\bin\Debug\net8.0\SalesAnalysis.ML.deps.json
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\bin\Debug\net8.0\SalesAnalysis.ML.dll
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\bin\Debug\net8.0\SalesAnalysis.ML.pdb
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\bin\Debug\net8.0\SalesAnalysis.Core.dll
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\bin\Debug\net8.0\SalesAnalysis.Core.pdb
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\obj\Debug\net8.0\SalesAnalysis.ML.csproj.AssemblyReference.cache
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\obj\Debug\net8.0\SalesAnalysis.ML.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\obj\Debug\net8.0\SalesAnalysis.ML.AssemblyInfoInputs.cache
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\obj\Debug\net8.0\SalesAnalysis.ML.AssemblyInfo.cs
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\obj\Debug\net8.0\SalesAnalysis.ML.csproj.CoreCompileInputs.cache
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\obj\Debug\net8.0\SalesAnalysis.ML.sourcelink.json
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\obj\Debug\net8.0\SalesAna.1F2238DD.Up2Date
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\obj\Debug\net8.0\SalesAnalysis.ML.dll
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\obj\Debug\net8.0\refint\SalesAnalysis.ML.dll
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\obj\Debug\net8.0\SalesAnalysis.ML.pdb
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.ML\obj\Debug\net8.0\ref\SalesAnalysis.ML.dll

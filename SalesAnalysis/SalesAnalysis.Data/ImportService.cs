@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using CsvHelper.TypeConversion;
+using System.Globalization;
 
 namespace SalesAnalysis.Data.Services
 {
@@ -29,25 +30,35 @@ namespace SalesAnalysis.Data.Services
             {
                 var context = scope.ServiceProvider.GetRequiredService<SalesDbContext>();
 
-                await context.Database.EnsureCreatedAsync();
+                // Використовуємо InvariantCulture, щоб крапка в числах і дати YYYY-MM-DD зчитувалися всюди однаково
+                // У методі ImportTransactionsFromCsvAsync
+                // У методі ImportTransactionsFromCsvAsync
+                // У методі ImportTransactionsFromCsvAsync
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    HasHeaderRecord = true,
+                };
 
                 using var reader = new StreamReader(fileStream);
-                using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+                using var csv = new CsvReader(reader, config);
+
+                // 1. Додаємо підтримку обох форматів (із секундами та без), 
+                // щоб програма була стійкою до різних файлів.
+                var options = csv.Context.TypeConverterOptionsCache.GetOptions<DateTime>();
+                options.Formats = new[] { "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm" };
 
                 csv.Context.RegisterClassMap<TransactionMap>();
 
                 try
                 {
                     var transactions = csv.GetRecords<Transaction>().ToList();
-
                     await context.Transactions.AddRangeAsync(transactions);
-                    int importedCount = await context.SaveChangesAsync();
-
-                    return importedCount;
+                    return await context.SaveChangesAsync();
                 }
                 catch (Exception ex)
                 {
-                    throw new InvalidOperationException("Помилка під час парсингу або збереження даних. Перевірте формат CSV та назви колонок (InvoiceDate, CustomerID, StockCode, Quantity, UnitPrice).", ex);
+                    // Виводимо опис внутрішньої помилки (InnerException), щоб побачити точну причину в консолі
+                    throw new InvalidOperationException($"Помилка: {ex.InnerException?.Message ?? ex.Message}", ex);
                 }
             }
         }
@@ -104,11 +115,15 @@ namespace SalesAnalysis.Data.Services
             // 3. Мапінг ідентифікатора товару
             Map(m => m.ProductId).Name("StockCode");
 
+            Map(m => m.ProductName).Name("Description");
+
             // 4. Мапінг кількості придбаних одиниць
             Map(m => m.Quantity).Name("Quantity");
 
             // 5. Мапінг ціни за одиницю товару
             Map(m => m.UnitPrice).Name("UnitPrice");
+
+            Map(m => m.ProductName).Name("Description"); // Додаємо зчитування опису товару
 
             // 6. Обчислення доходу через власний конвертер
             // Значення Revenue не зчитується напряму з CSV,
