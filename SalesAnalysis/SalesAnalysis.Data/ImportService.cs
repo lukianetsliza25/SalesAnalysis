@@ -24,41 +24,37 @@ namespace SalesAnalysis.Data.Services
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<int> ImportTransactionsFromCsvAsync(Stream fileStream)
+        public async Task<int> ImportTransactionsFromCsvAsync(Stream fileStream, int userId) // Додали userId
         {
             using (var scope = _serviceProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<SalesDbContext>();
-
-                // Використовуємо InvariantCulture, щоб крапка в числах і дати YYYY-MM-DD зчитувалися всюди однаково
-                // У методі ImportTransactionsFromCsvAsync
-                // У методі ImportTransactionsFromCsvAsync
-                // У методі ImportTransactionsFromCsvAsync
-                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-                {
-                    HasHeaderRecord = true,
-                };
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture) { HasHeaderRecord = true };
 
                 using var reader = new StreamReader(fileStream);
                 using var csv = new CsvReader(reader, config);
 
-                // 1. Додаємо підтримку обох форматів (із секундами та без), 
-                // щоб програма була стійкою до різних файлів.
+                // Налаштування форматів дати...
                 var options = csv.Context.TypeConverterOptionsCache.GetOptions<DateTime>();
                 options.Formats = new[] { "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm" };
-
                 csv.Context.RegisterClassMap<TransactionMap>();
 
                 try
                 {
                     var transactions = csv.GetRecords<Transaction>().ToList();
+
+                    // ПРИВ'ЯЗКА: кожній транзакції призначаємо власника
+                    foreach (var t in transactions)
+                    {
+                        t.UserId = userId;
+                    }
+
                     await context.Transactions.AddRangeAsync(transactions);
                     return await context.SaveChangesAsync();
                 }
                 catch (Exception ex)
                 {
-                    // Виводимо опис внутрішньої помилки (InnerException), щоб побачити точну причину в консолі
-                    throw new InvalidOperationException($"Помилка: {ex.InnerException?.Message ?? ex.Message}", ex);
+                    throw new InvalidOperationException($"Помилка: {ex.Message}");
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿// SalesAnalysis.Web/Controllers/DashboardController.cs
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.ML;
 using SalesAnalysis.Core.Models;
 using SalesAnalysis.Data.Services;
 using SalesAnalysis.ML.Services;
@@ -10,11 +11,13 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
+[Authorize]
 public class DashboardController : Controller
 {
     private readonly AnalysisService _analysisService;
     private readonly ClusteringService _clusteringService;
     private readonly PredictionService _predictionService;
+    private readonly UserManager<IdentityUser<int>> _userManager;
 
     private const int PAGE_SIZE = 30;
     private const int PREDICTION_PERIODS = 12;
@@ -22,283 +25,146 @@ public class DashboardController : Controller
     public DashboardController(
         AnalysisService analysisService,
         ClusteringService clusteringService,
-        PredictionService predictionService)
+        PredictionService predictionService,
+        UserManager<IdentityUser<int>> userManager)
     {
         _analysisService = analysisService;
         _clusteringService = clusteringService;
-        _predictionService = predictionService; 
+        _predictionService = predictionService;
+        _userManager = userManager;
     }
 
     public async Task<IActionResult> Index()
     {
+        // 1. Отримуємо ID поточного користувача
+        var userStrId = _userManager.GetUserId(User);
+        if (string.IsNullOrEmpty(userStrId)) return Challenge();
+        int userId = int.Parse(userStrId);
 
-        // KPI
-        ViewBag.TotalRevenue = await _analysisService.GetTotalRevenueAsync();
-        ViewBag.TotalTransactions = await _analysisService.GetTotalTransactionsAsync();
+        // 2. Перевірка наявності даних
+        var totalTransactions = await _analysisService.GetTotalTransactionsAsync(userId);
+        if (totalTransactions == 0)
+        {
+            return RedirectToAction("Index", "Import");
+        }
 
-        var allData = await _analysisService.GetCustomerClusteringDataAsync();
+        // --- 3. KPI ---
+        ViewBag.TotalRevenue = await _analysisService.GetTotalRevenueAsync(userId);
+        ViewBag.TotalTransactions = totalTransactions;
 
-        // Кількість унікальних клієнтів
+        var allData = await _analysisService.GetCustomerClusteringDataAsync(userId);
         int uniqueCustomers = allData.Count;
 
-        // Середній чек
-        decimal averageOrderValue = 0;
-        if (ViewBag.TotalTransactions > 0)
-        {
-            averageOrderValue = ViewBag.TotalRevenue / ViewBag.TotalTransactions;
-        }
+        ViewBag.UniqueCustomers = uniqueCustomers;
+        ViewBag.AverageOrderValue = Math.Round(totalTransactions > 0 ? (decimal)ViewBag.TotalRevenue / totalTransactions : 0, 2);
+        ViewBag.AvgCustomerSpend = Math.Round(uniqueCustomers > 0 ? (decimal)ViewBag.TotalRevenue / uniqueCustomers : 0, 2);
+        ViewBag.AvgFrequency = Math.Round(uniqueCustomers > 0 ? (float)totalTransactions / uniqueCustomers : 0, 2);
 
-        // Середні витрати на клієнта
-        decimal avgCustomerSpend = 0;
-        if (uniqueCustomers > 0)
-        {
-            avgCustomerSpend = ViewBag.TotalRevenue / uniqueCustomers;
-        }
-
-        // Середня частота покупок
-        float avgFrequency = 0;
-        if (uniqueCustomers > 0)
-        {
-            avgFrequency = (float)ViewBag.TotalTransactions / uniqueCustomers;
-        }
-
-        // 5. Найкращий і найгірший місяць продажів
-        var monthlyData = await _analysisService.GetMonthlySalesDataAsync();
-        var monthlyKpi = await _analysisService.GetMonthlyKpiDataAsync();
+        var monthlyData = await _analysisService.GetMonthlySalesDataAsync(userId);
+        var monthlyKpi = await _analysisService.GetMonthlyKpiDataAsync(userId);
         ViewBag.KpiHistory = monthlyKpi;
-
-        float bestMonth = 0, worstMonth = 0;
-        string bestMonthName = "-", worstMonthName = "-";
 
         if (monthlyData.Any())
         {
             var best = monthlyData.OrderByDescending(m => m.SalesAmount).First();
             var worst = monthlyData.OrderBy(m => m.SalesAmount).First();
-
-            bestMonth = best.SalesAmount;
-            worstMonth = worst.SalesAmount;
-
-            bestMonthName = $"Місяць #{best.TimeIndex}";
-            worstMonthName = $"Місяць #{worst.TimeIndex}";
+            ViewBag.BestMonth = best.SalesAmount;
+            ViewBag.BestMonthName = $"Місяць #{best.TimeIndex}";
+            ViewBag.WorstMonth = worst.SalesAmount;
+            ViewBag.WorstMonthName = $"Місяць #{worst.TimeIndex}";
         }
 
-        // --- Передаємо у View --- //
-        ViewBag.UniqueCustomers = uniqueCustomers;
-        ViewBag.AverageOrderValue = Math.Round(averageOrderValue, 2);
-        ViewBag.AvgCustomerSpend = Math.Round(avgCustomerSpend, 2);
-        ViewBag.AvgFrequency = Math.Round(avgFrequency, 2);
-
-        ViewBag.BestMonth = bestMonth;
-        ViewBag.BestMonthName = bestMonthName;
-
-        ViewBag.WorstMonth = worstMonth;
-        ViewBag.WorstMonthName = worstMonthName;
-
-
-        // ---------------- 1. Отримуємо RFM-дані ----------------
-        var data = await _analysisService.GetCustomerClusteringDataAsync();
+        // --- 4. КЛАСТЕРИЗАЦІЯ (Виправлено логіку) ---
         var result = new List<ClusteredCustomer>();
-
-        if (data.Any())
+        if (allData.Any())
         {
-            // ---------------- 2. Пошук аномалій ----------------
+            var spentValues = allData.Select(x => x.TotalSpent).Where(x => x > 0).OrderBy(x => x).ToList();
+            var freqValues = allData.Select(x => x.PurchaseFrequency).OrderBy(x => x).ToList();
 
-            var anomalies = new List<CustomerData>();
-            var normal = new List<CustomerData>();
-
-            var spent = data.Select(x => x.TotalSpent)
-                .Where(x => x > 0)
-                .OrderBy(x => x)
-                .ToList();
-            var freq = data.Select(x => x.PurchaseFrequency)
-                .OrderBy(x => x).ToList();
-
-            float Percentile(List<float> list, double p)
+            float GetPercentile(List<float> list, double p)
             {
-                if (list.Count == 0) return 0;
-                double idx = (list.Count - 1) * p;
-                int i = (int)idx;
-                double frac = idx - i;
-                return (float)(list[i] + (list[Math.Min(i + 1, list.Count - 1)] -
-                    list[i]) * frac);
+                if (!list.Any()) return 0;
+                int idx = (int)((list.Count - 1) * p);
+                return list[idx];
             }
 
-            float p99Spent = Percentile(spent, 0.99);
-            float p99Freq = Percentile(freq, 0.99);
+            float p99Spent = GetPercentile(spentValues, 0.99);
+            float p99Freq = GetPercentile(freqValues, 0.99);
 
-            foreach (var c in data)
+            var normal = allData.Where(c => c.TotalSpent > 0 && c.TotalSpent <= p99Spent && c.PurchaseFrequency <= p99Freq).ToList();
+            var anomalies = allData.Except(normal).ToList();
+
+            if (normal.Any())
             {
-                bool isAnomaly =
-                    c.TotalSpent <= 0 ||
-                    c.TotalSpent > p99Spent ||
-                    c.PurchaseFrequency > p99Freq;
+                var clusterModel = _clusteringService.TrainAndSaveModel(_clusteringService.MLContext.Data.LoadFromEnumerable(normal));
+                var predictions = normal.Select(c => new { Data = c, Pred = _clusteringService.Predict(clusterModel, c) }).ToList();
 
-                if (isAnomaly) anomalies.Add(c);
-                else normal.Add(c);
-            }
+                // Обчислюємо центри кластерів для мапінгу
+                var stats = predictions.GroupBy(p => p.Pred.PredictedClusterId)
+                    .Select(g => new { Id = g.Key, AvgSpent = g.Average(x => x.Data.TotalSpent) }).OrderByDescending(x => x.AvgSpent).ToList();
 
-            // ---------------- 3. Тренуємо модель на неаномальних ----------------
-
-            var model = _clusteringService.TrainAndSaveModel(
-                _clusteringService.MLContext.Data.LoadFromEnumerable(normal)
-            );
-
-            var predictions = normal
-                .Select(c => (c, _clusteringService.Predict(model, c)))
-                .ToList();
-
-            // Групування результатів кластеризації за ідентифікатором кластера
-            // та обчислення середніх значень RFM-метрик для кожного кластера
-            var stats = predictions
-                .GroupBy(p => (int)p.Item2.PredictedClusterId)
-                .Select(g => new
+                foreach (var item in predictions)
                 {
-                    Id = g.Key, // Ідентифікатор кластера
-                    // Середні витрати клієнтів
-                    AvgSpent = g.Average(x => x.Item1.TotalSpent),
-                    // Середня частота покупок
-                    AvgFreq = g.Average(x => x.Item1.PurchaseFrequency),
-                    // Середня давність останньої покупки
-                    AvgRec = g.Average(x => x.Item1.DaysSinceLastPurchase)
-                })
-                .ToList();
+                    // Логіка: найвищий дохід - VIP (3), найнижчий - Новий (1), інше - Середній (2)
+                    int logicalId = 2;
+                    if (stats.Count > 0 && item.Pred.PredictedClusterId == stats[0].Id) logicalId = 3;
+                    else if (stats.Count > 1 && item.Pred.PredictedClusterId == stats.Last().Id) logicalId = 1;
 
-            // Визначення логічних типів кластерів на основі RFM-характеристик
-
-            // VIP-кластер — клієнти з найбільшими витратами та високою частотою покупок
-            var vip = stats
-                .OrderByDescending(x => x.AvgSpent + x.AvgFreq)
-                .First().Id;
-
-            // Рідкісний (або новий) кластер — клієнти з найбільшою давністю останньої покупки
-            var rare = stats
-                .OrderByDescending(x => x.AvgRec)
-                .First().Id;
-
-            // Середній кластер — решта клієнтів, що не належать до VIP або рідкісних
-            var mid = stats
-                .Select(x => x.Id)
-                .Except(new[] { vip, rare })
-                .FirstOrDefault();
-
-            // Мапінг технічних ідентифікаторів кластерів у логічні категорії
-            int MapCluster(int id)
-            {
-                if (id == vip) return 3;   // VIP-клієнти
-                if (id == rare) return 1;  // Нові або рідкісні клієнти
-                return 2;                  // Клієнти середнього сегмента
+                    result.Add(new ClusteredCustomer
+                    {
+                        CustomerId = item.Data.CustomerId,
+                        TotalSpent = item.Data.TotalSpent,
+                        PurchaseFrequency = item.Data.PurchaseFrequency,
+                        ClusterId = logicalId,
+                        ClusterDescription = logicalId == 3 ? "Високоцінний (VIP)" : (logicalId == 1 ? "Новий/Рідкісний" : "Середній")
+                    });
+                }
             }
-
-
-            // ---------------- 5. Додаємо нормальні клієнти ----------------
-
-            foreach (var (c, p) in predictions)
-            {
-                int cluster = (int)p.PredictedClusterId;
-                int logicalId = MapCluster(cluster);
-
-                string desc = logicalId switch
-                {
-                    3 => "Високоцінний (VIP)",
-                    1 => "Новий/Рідкісний",
-                    _ => "Середній"
-                };
-
-                result.Add(new ClusteredCustomer
-                {
-                    CustomerId = c.CustomerId,
-                    TotalSpent = c.TotalSpent,
-                    PurchaseFrequency = (int)c.PurchaseFrequency,
-                    ClusterId = logicalId,
-                    ClusterDescription = desc
-                });
-            }
-
-            // ---------------- 6. Додаємо аномалії ----------------
-
             foreach (var a in anomalies)
             {
-                result.Add(new ClusteredCustomer
-                {
-                    CustomerId = a.CustomerId,
-                    TotalSpent = a.TotalSpent,
-                    PurchaseFrequency = (int)a.PurchaseFrequency,
-                    ClusterId = 0,
-                    ClusterDescription = "Аномалія / Некоректні дані"
-                });
+                result.Add(new ClusteredCustomer { CustomerId = a.CustomerId, TotalSpent = a.TotalSpent, PurchaseFrequency = a.PurchaseFrequency, ClusterId = 0, ClusterDescription = "Аномалія" });
             }
-
-
         }
 
-
-        // ---------------- ПАГІНАЦІЯ ----------------
-
+        // --- 5. ПАГІНАЦІЯ ---
         int total = result.Count;
         int totalPages = (int)Math.Ceiling(total / (double)PAGE_SIZE);
-
-        // Поточна сторінка
         int currentPage = 1;
-        if (Request.Query.ContainsKey("page"))
-        {
-            int.TryParse(Request.Query["page"], out currentPage);
-            if (currentPage < 1) currentPage = 1;
-            if (currentPage > totalPages) currentPage = totalPages;
-        }
+        if (Request.Query.ContainsKey("page") && int.TryParse(Request.Query["page"], out int pVal))
+            currentPage = Math.Clamp(pVal, 1, totalPages > 0 ? totalPages : 1);
 
-        ViewBag.ClusteredCustomers = result
-            .OrderBy(c => c.CustomerId)        // можна замінити на OrderByDescending(...)
-            .Skip((currentPage - 1) * PAGE_SIZE)
-            .Take(PAGE_SIZE)
-            .ToList();
-
+        ViewBag.ClusteredCustomers = result.OrderBy(c => c.CustomerId).Skip((currentPage - 1) * PAGE_SIZE).Take(PAGE_SIZE).ToList();
         ViewBag.TotalCustomers = total;
         ViewBag.CurrentPage = currentPage;
         ViewBag.TotalPages = totalPages;
 
-
-        // 6. Прогнозування та Тональність
-        var monthlyData1 = await _analysisService.GetMonthlySalesDataAsync();
-        ViewBag.TotalMonths = monthlyData.Count;
-
-
-        // Збір даних для графіку
+        // --- 6. ПРОГНОЗУВАННЯ (З кешуванням) ---
         List<float> historyData = monthlyData.Select(d => d.SalesAmount).ToList();
         List<float> predictionData = new List<float>();
 
-        if (monthlyData.Count >= 4)
+        var cachedJson = await _analysisService.GetLastAnalysisResultAsync(userId, "SalesForecast");
+
+        if (!string.IsNullOrEmpty(cachedJson))
+        {
+            predictionData = JsonSerializer.Deserialize<List<float>>(cachedJson);
+            ViewBag.NextMonthPrediction = predictionData?.FirstOrDefault() ?? 0.0f;
+        }
+        else if (monthlyData.Count >= 4)
         {
             var nextTimeIndex = monthlyData.Max(d => d.TimeIndex) + 1;
-
             try
             {
-                var predictionModel = _predictionService.TrainAndSaveModel(
-                    _predictionService.MLContext.Data.LoadFromEnumerable(monthlyData));
-
-                // 1. Прогноз на 12 місяців
-                predictionData = _predictionService.PredictNPeriods(
-                    predictionModel, nextTimeIndex, PREDICTION_PERIODS);
-
-                // 2. Перший прогноз (для картки KPI)
+                var predictionModel = _predictionService.TrainAndSaveModel(_predictionService.MLContext.Data.LoadFromEnumerable(monthlyData));
+                predictionData = _predictionService.PredictNPeriods(predictionModel, nextTimeIndex, PREDICTION_PERIODS);
                 ViewBag.NextMonthPrediction = predictionData.FirstOrDefault();
+                await _analysisService.SaveAnalysisResultAsync(userId, "ALL", "SalesForecast", predictionData);
             }
-            catch (Exception)
-            {
-                ViewBag.NextMonthPrediction = 450.00f;
-            }
-        }
-        else
-        {
-            ViewBag.NextMonthPrediction = 0.0f;
+            catch { ViewBag.NextMonthPrediction = 0.0f; }
         }
 
-        // Передача даних у View у форматі JSON
         ViewBag.HistoryDataJson = JsonSerializer.Serialize(historyData);
         ViewBag.PredictionDataJson = JsonSerializer.Serialize(predictionData);
 
-
         return View();
     }
-
-
 }

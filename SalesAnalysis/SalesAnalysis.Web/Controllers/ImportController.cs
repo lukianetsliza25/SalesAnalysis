@@ -27,22 +27,24 @@ public class ImportController : Controller
     {
         if (file == null || file.Length == 0)
         {
-            ViewBag.Message = "Помилка: Файл не обрано або він порожній.";
+            ViewBag.Message = "Помилка: Файл не обрано.";
             return View("Index");
         }
 
         try
         {
+            // 1. Отримуємо ID користувача спочатку
+            var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+
             int importedCount;
             using (var stream = file.OpenReadStream())
             {
-                importedCount = await _importService.ImportTransactionsFromCsvAsync(stream);
+                // 2. Викликаємо імпорт ТІЛЬКИ ОДИН РАЗ і передаємо userId
+                importedCount = await _importService.ImportTransactionsFromCsvAsync(stream, userId);
             }
 
             if (importedCount > 0)
             {
-                await Task.Delay(1000);
-
                 return RedirectToAction("Index", "Dashboard");
             }
             else

@@ -9,9 +9,7 @@ namespace SalesAnalysis.Core.Entities
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey("User")]
         public int UserId { get; set; }
-        public User User { get; set; }
 
         public string ProductId { get; set; }
 

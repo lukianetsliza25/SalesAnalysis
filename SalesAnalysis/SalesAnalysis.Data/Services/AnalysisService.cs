@@ -35,7 +35,7 @@ namespace SalesAnalysis.Data.Services
 
         // -----------------------------------------------------
         // Метод обчислення загального доходу
-        public async Task<decimal> GetTotalRevenueAsync()
+        public async Task<decimal> GetTotalRevenueAsync(int userId)
         {
             using (var context = GetContext())
             {
@@ -48,6 +48,7 @@ namespace SalesAnalysis.Data.Services
                 // Обчислення сумарного доходу на основі поля Revenue
                 return await Task.Run(() =>
                     context.Transactions
+                            .Where(t => t.UserId == userId) // ФІЛЬТР
                            .AsEnumerable()
                            .Sum(t => t.Revenue)
                 );
@@ -56,24 +57,28 @@ namespace SalesAnalysis.Data.Services
 
         // -----------------------------------------------------
         // Метод отримання загальної кількості транзакцій
-        public async Task<int> GetTotalTransactionsAsync()
+        public async Task<int> GetTotalTransactionsAsync(int userId)
         {
             using (var context = GetContext())
             {
                 // Підрахунок кількості записів у таблиці транзакцій
-                return await context.Transactions.CountAsync();
+                return await context.Transactions
+                    .Where(t => t.UserId == userId) // ДОДАЙТЕ ЦЕЙ РЯДОК
+                    .CountAsync();
             }
         }
 
         // -----------------------------------------------------
         // Метод формування RFM-даних для кластеризації клієнтів
 
-        public async Task<List<CustomerData>> GetCustomerClusteringDataAsync()
+        public async Task<List<CustomerData>> GetCustomerClusteringDataAsync(int userId)
         {
             using (var context = GetContext())
             {
                 // Отримання всіх транзакцій з бази даних
-                var allTransactions = await context.Transactions.ToListAsync();
+                var allTransactions = await context.Transactions
+                    .Where(t => t.UserId == userId) // ФІЛЬТР
+                    .ToListAsync();
 
                 // Якщо дані відсутні — повертаємо порожній список
                 if (!allTransactions.Any())
@@ -119,12 +124,11 @@ namespace SalesAnalysis.Data.Services
             }
         }
         // Метод агрегації продажів для КОНКРЕТНОГО товару
-        public async Task<List<SalesDataPoint>> GetMonthlySalesByProductAsync(string productId)
+        public async Task<List<SalesDataPoint>> GetMonthlySalesByProductAsync(string productId, int userId)
         {
             using var context = GetContext();
             var all = await context.Transactions
-                .Where(t => t.ProductId == productId)
-                .ToListAsync();
+                .Where(t => t.ProductId == productId && t.UserId == userId).ToListAsync();
 
             if (!all.Any()) return new List<SalesDataPoint>();
 
@@ -159,12 +163,14 @@ namespace SalesAnalysis.Data.Services
         // -----------------------------------------------------
         // Метод агрегації продажів за місяцями
 
-        public async Task<List<SalesDataPoint>> GetMonthlySalesDataAsync()
+        public async Task<List<SalesDataPoint>> GetMonthlySalesDataAsync(int userId)
         {
             using (var context = GetContext())
             {
                 // Отримання всіх транзакцій
-                var allTransactions = await context.Transactions.ToListAsync();
+                var allTransactions = await context.Transactions
+                    .Where(t => t.UserId == userId)
+                    .ToListAsync();
 
                 // Якщо дані відсутні — повертаємо порожній список
                 if (!allTransactions.Any())
@@ -201,12 +207,14 @@ namespace SalesAnalysis.Data.Services
 
         // -----------------------------------------------------
         // Метод обчислення розширених місячних KPI
-        public async Task<List<MonthlyKpiData>> GetMonthlyKpiDataAsync()
+        public async Task<List<MonthlyKpiData>> GetMonthlyKpiDataAsync(int userId)
         {
             using var context = GetContext();
 
             // Отримання всіх транзакцій
-            var all = await context.Transactions.ToListAsync();
+            var all = await context.Transactions
+                .Where(t => t.UserId == userId)
+                .ToListAsync();
             if (!all.Any()) return new List<MonthlyKpiData>();
 
             // Групування даних за місяцями
@@ -260,6 +268,17 @@ namespace SalesAnalysis.Data.Services
             }
 
             return grouped;
+        }
+
+        public async Task<string> GetLastAnalysisResultAsync(int userId, string type)
+        {
+            using var context = GetContext();
+            var analysis = await context.SavedAnalyses
+                .Where(a => a.UserId == userId && a.AnalysisType == type)
+                .OrderByDescending(a => a.CreatedAt)
+                .FirstOrDefaultAsync();
+
+            return analysis?.ResultJson;
         }
     }
 }

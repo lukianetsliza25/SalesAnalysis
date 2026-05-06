@@ -32,6 +32,23 @@
                           font-medium shadow transition flex items-center space-x-2">
                     <span>📁</span><span>Імпорт даних</span>
                 </a>
+                <ul class="flex">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <span class="px-4">Вітаю, @User.Identity.Name!</span>
+                        </li>
+                        <li class="nav-item">
+                            <form asp-controller="Account" asp-action="Logout" method="post">
+                                <button type="submit" class="text-red-500">Вихід</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a asp-controller="Account" asp-action="Auth">Авторизація</a></li>
+                    }
+                </ul>
             </div>
         </div>
     </nav>

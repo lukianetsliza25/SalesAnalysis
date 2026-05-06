@@ -1,10 +1,11 @@
 // SalesAnalysis.Web/Program.cs (Фрагмент конфігурації)
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using SalesAnalysis.Data;
 using SalesAnalysis.Data.Services;
 using SalesAnalysis.ML.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,18 @@ builder.Services.AddDbContext<SalesDbContext>(options =>
     options.UseNpgsql(
     builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(options => {
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+})
+.AddEntityFrameworkStores<SalesDbContext>();
 
+builder.Services.ConfigureApplicationCookie(options => {
+    options.LoginPath = "/Account/Auth"; // Змінено з /Login на /Auth
+    options.LogoutPath = "/Account/Auth";
+});
 // --- 2. Реєстрація Сервісів (Dependency Injection) ---
 builder.Services.AddScoped<ImportService>();
 builder.Services.AddScoped<AnalysisService>();
@@ -34,13 +46,12 @@ var app = builder.Build();
 // --- 3. ГАРАНТОВАНЕ СТВОРЕННЯ БАЗИ ДАНИХ ---
 CreateDbIfNotExists(app);
 
+app.UseAuthentication();
 app.UseAuthorization();
-
 // Встановлюємо стартовий маршрут на Dashboard
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Dashboard}/{action=Index}/{id?}");
-
+    pattern: "{controller=Account}/{action=Auth}/{id?}");
 app.Run();
 
 // --- ДОПОМІЖНИЙ МЕТОД ---

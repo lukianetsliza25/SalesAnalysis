@@ -102,6 +102,38 @@
     </div>
 </div>
 </body>
+<div id="loadingOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-70 hidden flex-col items-center justify-center z-[100]">
+    <div class="bg-white p-8 rounded-2xl shadow-2xl flex flex-col items-center max-w-sm text-center">
+        <!-- Анімоване коло -->
+        <div class="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4"></div>
+        <h2 class="text-xl font-bold text-gray-800 mb-2">Обробка даних...</h2>
+        <p class="text-gray-600">Це може зайняти до 1 хвилини для 15 000 транзакцій. Будь ласка, не закривайте сторінку.</p>
+
+        <!-- Прогрес-бар (декоративний) -->
+        <div class="w-full bg-gray-200 rounded-full h-2 mt-6 overflow-hidden">
+            <div class="bg-blue-600 h-full animate-[loading_2s_infinite]"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @@keyframes loading {
+        0% {
+            width: 0%;
+            margin-left: 0%;
+        }
+
+        50% {
+            width: 50%;
+            margin-left: 25%;
+        }
+
+        100% {
+            width: 0%;
+            margin-left: 100%;
+        }
+    }
+</style>
 
 <!-- ======================== SCRIPT: DRAG & DROP ========================= -->
 <script>
@@ -133,6 +165,22 @@
         if (fileInput.files.length > 0) {
             fileName.textContent = fileInput.files[0].name;
             fileName.classList.remove("hidden");
+        }
+    });
+        // Додаємо подію на форму
+    document.querySelector("form").addEventListener("submit", function (e) {
+        const fileInput = document.getElementById("fileInput");
+
+        // Показуємо оверлей тільки якщо файл реально обрано
+        if (fileInput.files.length > 0) {
+            const overlay = document.getElementById("loadingOverlay");
+            overlay.classList.remove("hidden");
+            overlay.classList.add("flex");
+
+            // Додатково: змінюємо текст на кнопці, щоб заблокувати повторні натискання
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = "<span>⏳</span><span>Обробка...</span>";
         }
     });
 </script>
