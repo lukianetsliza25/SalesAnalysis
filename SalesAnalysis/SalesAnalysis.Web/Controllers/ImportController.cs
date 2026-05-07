@@ -1,12 +1,14 @@
 ﻿// SalesAnalysis.Web/Controllers/ImportController.cs
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SalesAnalysis.Data.Services;
-using System.IO;
-using System.Threading.Tasks;
-using System;
 using SalesAnalysis.Core.Entities;
+using SalesAnalysis.Data.Services;
+using System;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
+[Authorize]
 public class ImportController : Controller
 {
     private readonly ImportService _importService;
@@ -36,6 +38,7 @@ public class ImportController : Controller
             // 1. Отримуємо ID користувача спочатку
             var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
 
+            await _importService.ClearPreviousDataAsync(userId);
             int importedCount;
             using (var stream = file.OpenReadStream())
             {

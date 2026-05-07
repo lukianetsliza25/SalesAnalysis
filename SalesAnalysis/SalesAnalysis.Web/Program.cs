@@ -41,18 +41,32 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(optio
     options.MultipartBodyLengthLimit = 104857600; // 100 MB
 });
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 100_000_000;
+});
+
 var app = builder.Build();
 
-// --- 3. ГАРАНТОВАНЕ СТВОРЕННЯ БАЗИ ДАНИХ ---
 CreateDbIfNotExists(app);
+
+app.UseStaticFiles();
+
+app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-// Встановлюємо стартовий маршрут на Dashboard
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Auth}/{id?}");
+
 app.Run();
+// --- 3. ГАРАНТОВАНЕ СТВОРЕННЯ БАЗИ ДАНИХ ---
+
+
+// Встановлюємо стартовий маршрут на Dashboard
+
 
 // --- ДОПОМІЖНИЙ МЕТОД ---
 void CreateDbIfNotExists(IHost host)

@@ -139,32 +139,65 @@ public class DashboardController : Controller
         ViewBag.TotalPages = totalPages;
 
         // --- 6. ПРОГНОЗУВАННЯ (З кешуванням) ---
+        // --- 6. ПРОГНОЗУВАННЯ (З кешуванням та виправленням аномалій) ---
+        // --- 6. ПРОГНОЗУВАННЯ ---
+        // --- 6. ПРОГНОЗУВАННЯ (Оновлено: без фільтрації аномалій + надійний кеш) ---
         List<float> historyData = monthlyData.Select(d => d.SalesAmount).ToList();
         List<float> predictionData = new List<float>();
 
+        // Спробуємо дістати вже існуючий прогноз з бази
         var cachedJson = await _analysisService.GetLastAnalysisResultAsync(userId, "SalesForecast");
 
-        if (!string.IsNullOrEmpty(cachedJson))
+        if (!string.IsNullOrEmpty(cachedJson) && cachedJson != "[]")
         {
+            // Якщо в базі є дані — використовуємо їх
             predictionData = JsonSerializer.Deserialize<List<float>>(cachedJson);
             ViewBag.NextMonthPrediction = predictionData?.FirstOrDefault() ?? 0.0f;
         }
-        else if (monthlyData.Count >= 4)
+        else if (monthlyData.Count >= 2) // Достатньо хоча б 2-х місяців для спроби навчання
         {
-            var nextTimeIndex = monthlyData.Max(d => d.TimeIndex) + 1;
             try
             {
-                var predictionModel = _predictionService.TrainAndSaveModel(_predictionService.MLContext.Data.LoadFromEnumerable(monthlyData));
-                predictionData = _predictionService.PredictNPeriods(predictionModel, nextTimeIndex, PREDICTION_PERIODS);
-                ViewBag.NextMonthPrediction = predictionData.FirstOrDefault();
-                await _analysisService.SaveAnalysisResultAsync(userId, "ALL", "SalesForecast", predictionData);
+                // Навчаємо модель на ВСІХ наявних місячних даних без фільтрації
+                var predictionModel = _predictionService.TrainAndSaveModel(
+                    _predictionService.MLContext.Data.LoadFromEnumerable(monthlyData));
+
+                // Визначаємо параметри для старту прогнозу
+                var lastMonthEntry = monthlyData.OrderByDescending(d => d.TimeIndex).First();
+                var nextIndex = lastMonthEntry.TimeIndex + 1;
+                int lastMonthValue = (int)lastMonthEntry.MonthOfYear;
+
+                // Робимо прогноз на 12 місяців
+                predictionData = _predictionService.PredictNPeriods(
+                    predictionModel,
+                    nextIndex,
+                    PREDICTION_PERIODS,
+                    lastMonthValue);
+
+                if (predictionData != null && predictionData.Any())
+                {
+                    ViewBag.NextMonthPrediction = predictionData.FirstOrDefault();
+
+                    // Зберігаємо в базу, щоб наступного разу не обчислювати заново
+                    await _analysisService.SaveAnalysisResultAsync(userId, "ALL", "SalesForecast", predictionData);
+                }
             }
-            catch { ViewBag.NextMonthPrediction = 0.0f; }
+            catch (Exception ex)
+            {
+                // Це запише помилку у вікно Output у Visual Studio
+                System.Diagnostics.Debug.WriteLine("---------- ML ERROR ----------");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+
+                // Це виведе помилку прямо на плашку прогнозу в інтерфейсі (для тесту)
+                ViewBag.NextMonthPredictionError = ex.Message;
+                ViewBag.NextMonthPrediction = 0.0f;
+            }
         }
 
+        // Передача даних у View для графіка
         ViewBag.HistoryDataJson = JsonSerializer.Serialize(historyData);
         ViewBag.PredictionDataJson = JsonSerializer.Serialize(predictionData);
-
         return View();
     }
 }

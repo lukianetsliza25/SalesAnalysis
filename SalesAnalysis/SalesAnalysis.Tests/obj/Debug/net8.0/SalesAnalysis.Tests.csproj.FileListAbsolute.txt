@@ -190,3 +190,10 @@ C:\Мої файли\Універ\4 курс\Курсова робота 2\Sales
 C:\Мої файли\Універ\4 курс\Курсова робота 2\SalesAnalysis\SalesAnalysis.Tests\obj\Debug\net8.0\SalesAnalysis.Tests.pdb
 C:\Мої файли\Універ\4 курс\Курсова робота 2\SalesAnalysis\SalesAnalysis.Tests\obj\Debug\net8.0\SalesAnalysis.Tests.genruntimeconfig.cache
 C:\Мої файли\Універ\4 курс\Курсова робота 2\SalesAnalysis\SalesAnalysis.Tests\obj\Debug\net8.0\ref\SalesAnalysis.Tests.dll
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.Tests\bin\Debug\net8.0\CoverletSourceRootsMapping_SalesAnalysis.Tests
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.Tests\obj\Debug\net8.0\SalesAnalysis.Tests.csproj.AssemblyReference.cache
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.Tests\obj\Debug\net8.0\SalesAnalysis.Tests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.Tests\obj\Debug\net8.0\SalesAnalysis.Tests.AssemblyInfoInputs.cache
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.Tests\obj\Debug\net8.0\SalesAnalysis.Tests.AssemblyInfo.cs
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.Tests\obj\Debug\net8.0\SalesAnalysis.Tests.csproj.CoreCompileInputs.cache
+C:\Users\lukan\OneDrive\Documentos\GitHub\SalesAnalysis\SalesAnalysis\SalesAnalysis.Tests\obj\Debug\net8.0\SalesAnalysis.Tests.sourcelink.json

@@ -1,9 +1,19 @@
-﻿namespace SalesAnalysis.Web.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SalesAnalysis.Web.Models
 {
     // Окрема модель для реєстрації
     public class RegisterViewModel
     {
+        [Required(ErrorMessage = "Ім'я обов'язкове")]
+        public string FirstName { get; set; } // Нове поле
+
+        [Required(ErrorMessage = "Електронна адреса обов'язкова")]
+        [EmailAddress]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "Пароль обов'язковий")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 

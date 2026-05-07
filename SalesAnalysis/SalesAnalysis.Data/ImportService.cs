@@ -58,6 +58,26 @@ namespace SalesAnalysis.Data.Services
                 }
             }
         }
+
+        public async Task ClearPreviousDataAsync(int userId)
+        {
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<SalesDbContext>();
+
+                // Швидке видалення прямо в БД (ExecuteDelete)
+                await context.Transactions
+                    .Where(t => t.UserId == userId)
+                    .ExecuteDeleteAsync();
+
+                await context.SavedAnalyses
+                    .Where(a => a.UserId == userId)
+                    .ExecuteDeleteAsync();
+
+                // SaveChangesAsync тут вже не потрібен для ExecuteDelete, 
+                // бо команда виконується миттєво
+            }
+        }
     }
 
     // -----------------------------------------------------

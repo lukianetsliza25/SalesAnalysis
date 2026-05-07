@@ -6,7 +6,6 @@
 <div class="min-h-[80vh] flex items-center justify-center px-4">
     <div class="max-w-md w-full bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
 
-        <!-- Вкладки (Tabs) -->
         <div class="flex border-b">
             <button id="loginTab" onclick="showTab('login')"
                     class="w-1/2 py-4 text-center font-semibold text-blue-600 border-b-2 border-blue-600 transition-all">
@@ -19,20 +18,21 @@
         </div>
 
         <div class="p-8">
-            <!-- Секція Входу -->
             <div id="loginForm">
                 <div class="text-center mb-6">
                     <h2 class="text-2xl font-bold text-gray-900">З поверненням!</h2>
                 </div>
                 <form asp-action="Login" method="post" class="space-y-4">
-                    <div asp-validation-summary="All" class="text-red-500 text-sm italic"></div>
+                    @* Повідомлення про помилки входу *@
+                    <div asp-validation-summary="ModelOnly" class="text-red-500 text-sm italic"></div>
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Email</label>
-                        <input name="email" type="email" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500">
+                        <input asp-for="Login.Email" name="Email" type="email" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Пароль</label>
-                        <input name="password" type="password" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500">
+                        <input asp-for="Login.Password" name="Password" type="password" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <button type="submit" class="w-full py-3 px-4 rounded-xl text-white bg-blue-600 hover:bg-blue-700 font-semibold shadow-lg transition-transform hover:scale-[1.02]">
                         Увійти
@@ -40,19 +40,25 @@
                 </form>
             </div>
 
-            <!-- Секція Реєстрації (Прихована за замовчуванням) -->
             <div id="registerForm" class="hidden">
                 <div class="text-center mb-6">
                     <h2 class="text-2xl font-bold text-gray-900">Створити акаунт</h2>
                 </div>
                 <form asp-action="Register" method="post" class="space-y-4">
+                    @* Повідомлення про помилки реєстрації (напр. "Користувач вже існує") *@
+                    <div asp-validation-summary="All" class="text-red-500 text-sm italic"></div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Ім'я</label>
+                        <input asp-for="Register.FirstName" name="FirstName" type="text" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500" placeholder="Введіть ваше ім'я">
+                    </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Email</label>
-                        <input name="email" type="email" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500">
+                        <input asp-for="Register.Email" name="Email" type="email" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Пароль</label>
-                        <input name="password" type="password" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500">
+                        <input asp-for="Register.Password" name="Password" type="password" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <button type="submit" class="w-full py-3 px-4 rounded-xl text-white bg-green-600 hover:bg-green-700 font-semibold shadow-lg transition-transform hover:scale-[1.02]">
                         Зареєструватися
@@ -62,6 +68,8 @@
         </div>
     </div>
 </div>
+
+@* Скрипт залишається без змін, він вже коректно перемикає вкладки на основі ViewData["ActiveTab"] *@
 
 <script>
     // Перевіряємо, чи передав контролер інформацію про активну вкладку після помилки

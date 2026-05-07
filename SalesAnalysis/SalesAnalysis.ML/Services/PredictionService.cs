@@ -20,34 +20,48 @@ namespace SalesAnalysis.ML.Services
         // Метод навчання регресійної моделі та збереження її на диск
         public ITransformer TrainAndSaveModel(IDataView trainingData)
         {
-            // Перевірка мінімальної кількості даних для навчання моделі
-            // Для коректного прогнозування необхідно щонайменше 4 точки
             if (trainingData.GetRowCount() < 4)
-                throw new InvalidOperationException(
-                    "Недостатньо точок даних для навчання. Потрібно мінімум 4.");
+                throw new InvalidOperationException("Недостатньо точок даних для навчання.");
 
-            // Формування конвеєра обробки даних і навчання моделі
-            var pipeline =
-                // Об’єднання індексу часу у вектор ознак
-                MLContext.Transforms.Concatenate(
-                    "Features", nameof(SalesDataPoint.TimeIndex))
-
-                // Нормалізація ознак для стабільності навчання
+            var pipeline = MLContext.Transforms.Concatenate("Features",
+                    nameof(SalesDataPoint.TimeIndex),
+                    nameof(SalesDataPoint.MonthOfYear)) // Додано другу ознаку
                 .Append(MLContext.Transforms.NormalizeMinMax("Features"))
-
-                // Навчання регресійної моделі
-                // Використовується Poisson-регресія для прогнозування кількісних значень
-                .Append(MLContext.Regression.Trainers.LbfgsPoissonRegression(
+                .Append(MLContext.Regression.Trainers.FastTree(
                     labelColumnName: "Label",
-                    featureColumnName: "Features"));
+                    featureColumnName: "Features",
+                    numberOfTrees: 100));
 
-            // Навчання моделі на вхідних даних
             var model = pipeline.Fit(trainingData);
-
-            // Збереження навченої моделі у файл
             MLContext.Model.Save(model, trainingData.Schema, ModelPath);
-
             return model;
+        }
+
+        // Оновіть також метод PredictNPeriods, щоб він вираховував правильний MonthOfYear для майбутнього
+        // Оновлений метод PredictNPeriods
+        public List<float> PredictNPeriods(ITransformer trainedModel, float startNextIndex, int periods, int lastMonth)
+        {
+            var results = new List<float>();
+            var predictionEngine = MLContext.Model.CreatePredictionEngine<SalesDataPoint, SalesPrediction>(trainedModel);
+
+            for (int i = 0; i < periods; i++)
+            {
+                var nextTimeIndex = startNextIndex + i;
+
+                // Розрахунок місяця року: (поточний + крок) % 12
+                var nextMonthOfYear = ((lastMonth - 1 + 1 + i) % 12) + 1;
+
+                var input = new SalesDataPoint
+                {
+                    TimeIndex = nextTimeIndex,
+                    MonthOfYear = (float)nextMonthOfYear
+                };
+
+                var prediction = predictionEngine.Predict(input);
+                // Додаємо результат (не менше 0)
+                results.Add((float)Math.Round(Math.Max(0, prediction.PredictedSales), 2));
+            }
+            return results;
         }
 
         // -----------------------------------------------------
@@ -65,7 +79,8 @@ namespace SalesAnalysis.ML.Services
             // Формування вхідних даних для прогнозування
             var input = new SalesDataPoint
             {
-                TimeIndex = nextTimeIndex
+                TimeIndex = nextTimeIndex,
+                MonthOfYear = 1
             };
 
             // Повернення прогнозного значення
@@ -74,38 +89,6 @@ namespace SalesAnalysis.ML.Services
 
         // -----------------------------------------------------
         // Метод прогнозування продажів на N майбутніх періодів
-        public List<float> PredictNPeriods(
-            ITransformer trainedModel,
-            float startNextIndex,
-            int periods)
-        {
-            var results = new List<float>();
-            // Створення PredictionEngine для багаторазового прогнозування
-            var predictionEngine =
-                MLContext.Model.CreatePredictionEngine<
-                    SalesDataPoint, SalesPrediction>(trainedModel);
-
-            // Генерація прогнозу для кожного наступного періоду
-            for (int i = 0; i < periods; i++)
-            {
-                // Обчислення індексу наступного періоду
-                var nextIndex = startNextIndex + i;
-
-                var input = new SalesDataPoint
-                {
-                    TimeIndex = nextIndex
-                };
-
-                // Отримання прогнозного значення
-                var prediction = predictionEngine.Predict(input);
-                // Забезпечення невід’ємності прогнозу
-                // Продажі не можуть мати від’ємне значення
-                results.Add(
-                    (float)Math.Round(
-                        Math.Max(0, prediction.PredictedSales), 2));
-            }
-
-            return results;
-        }
+        
     }
 }
