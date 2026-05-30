@@ -1,4 +1,4 @@
-﻿// SalesAnalysis.Data/Services/ImportService.cs
+﻿// SalesAnalysis.Data/ImportService.cs
 using CsvHelper.Configuration;
 using CsvHelper;
 using SalesAnalysis.Core.Entities;
@@ -138,8 +138,6 @@ namespace SalesAnalysis.Data.Services
 
             // 5. Мапінг ціни за одиницю товару
             Map(m => m.UnitPrice).Name("UnitPrice");
-
-            Map(m => m.ProductName).Name("Description"); // Додаємо зчитування опису товару
 
             // 6. Обчислення доходу через власний конвертер
             // Значення Revenue не зчитується напряму з CSV,

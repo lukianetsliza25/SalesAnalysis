@@ -1,4 +1,4 @@
-﻿// SalesAnalysis.Web/Controllers/PredictionService.cs
+﻿// SalesAnalysis.ML/Services/PredictionService.cs
 using Microsoft.ML;
 using SalesAnalysis.Core.Models;
 using Microsoft.ML.Data;

@@ -35,14 +35,22 @@ public class ImportController : Controller
 
         try
         {
-            // 1. Отримуємо ID користувача спочатку
-            var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+            // БЕЗПЕЧНЕ ОТРИМАННЯ ID КОРИСТУВАЧА (через стандартний NameIdentifier або Claim)
+            var userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                               ?? User.FindFirst("sub")?.Value;
+
+            if (string.IsNullOrEmpty(userIdString))
+            {
+                ViewBag.Message = "Помилка: Користувач не авторизований.";
+                return View("Index");
+            }
+
+            int userId = int.Parse(userIdString);
 
             await _importService.ClearPreviousDataAsync(userId);
             int importedCount;
             using (var stream = file.OpenReadStream())
             {
-                // 2. Викликаємо імпорт ТІЛЬКИ ОДИН РАЗ і передаємо userId
                 importedCount = await _importService.ImportTransactionsFromCsvAsync(stream, userId);
             }
 

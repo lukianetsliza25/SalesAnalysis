@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// SalesAnalysis.Web/Models/RegisterViewModel.cs
+using System.ComponentModel.DataAnnotations;
 
 namespace SalesAnalysis.Web.Models
 {

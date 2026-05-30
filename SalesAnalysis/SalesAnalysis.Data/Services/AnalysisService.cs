@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿//SalesAnalysis.Data/Services/AnalysisService.cs
+using Microsoft.EntityFrameworkCore;
 using SalesAnalysis.Data;
 using SalesAnalysis.Core.Models;
 using SalesAnalysis.Core.Entities;
@@ -80,19 +81,43 @@ namespace SalesAnalysis.Data.Services
 
             if (!allTransactions.Any()) return new List<SalesDataPoint>();
 
-            return allTransactions
+            // 1. Знаходимо найсвіжішу дату транзакції в усьому датасеті
+            var maxDate = allTransactions.Max(t => t.Date);
+
+            // 2. Визначаємо останній можливий день для цього місяця (наприклад, для лютого — 28 або 29)
+            int daysInMaxMonth = DateTime.DaysInMonth(maxDate.Year, maxDate.Month);
+
+            // Групуємо дані по місяцях
+            var groupedMonths = allTransactions
                 .GroupBy(t => new { t.Date.Year, t.Date.Month })
                 .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
-                .Select((g, index) => new SalesDataPoint
-                {
-                    // TimeIndex: порядковий номер для тренду (1, 2, 3...)
-                    TimeIndex = index + 1,
-                    // MonthOfYear: циклічний номер місяця для сезонності (1-12)
-                    MonthOfYear = (float)g.Key.Month,
-                    // SalesAmount: сума продажів
-                    SalesAmount = (float)g.Sum(t => t.Revenue)
-                })
                 .ToList();
+
+            var result = new List<SalesDataPoint>();
+            int index = 1;
+
+            foreach (var g in groupedMonths)
+            {
+                // 3. ФІЛЬТРАЦІЯ: Якщо це останній місяць у датасеті І максимальний день менший за 25-26 число 
+                // (тобто місяць явно не закритий / містить лише кілька днів) — ми його пропускаємо.
+                // Також перевіряємо, чи це не поточний календарний місяць, який ще триває.
+                bool isLastMonthInDataset = (g.Key.Year == maxDate.Year && g.Key.Month == maxDate.Month);
+                bool isCurrentCalendarMonth = (g.Key.Year == DateTime.UtcNow.Year && g.Key.Month == DateTime.UtcNow.Month);
+
+                if (isLastMonthInDataset && (maxDate.Day < (daysInMaxMonth - 2) || isCurrentCalendarMonth))
+                {
+                    continue; // Пропускаємо цей неповний місяць
+                }
+
+                result.Add(new SalesDataPoint
+                {
+                    TimeIndex = index++,
+                    MonthOfYear = (float)g.Key.Month,
+                    SalesAmount = (float)g.Sum(t => t.Revenue)
+                });
+            }
+
+            return result;
         }
 
         // -----------------------------------------------------

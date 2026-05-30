@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SalesAnalysis.ML")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c14b86666657eb589ac7e5dae092548dc732c7a0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7c876e478c66d2e925cea7a612d4b781c573eeef")]
 [assembly: System.Reflection.AssemblyProductAttribute("SalesAnalysis.ML")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SalesAnalysis.ML")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
