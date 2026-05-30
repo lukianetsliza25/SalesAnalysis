@@ -1,4 +1,4 @@
-﻿// SalesAnalysis.Data/Services/ImportService.cs
+﻿// SalesAnalysis.Data/ImportService.cs
 using CsvHelper.Configuration;
 using CsvHelper;
 using SalesAnalysis.Core.Entities;
@@ -24,42 +24,58 @@ namespace SalesAnalysis.Data.Services
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<int> ImportTransactionsFromCsvAsync(Stream fileStream)
+        public async Task<int> ImportTransactionsFromCsvAsync(Stream fileStream, int userId) // Додали userId
         {
             using (var scope = _serviceProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<SalesDbContext>();
-
-                // Використовуємо InvariantCulture, щоб крапка в числах і дати YYYY-MM-DD зчитувалися всюди однаково
-                // У методі ImportTransactionsFromCsvAsync
-                // У методі ImportTransactionsFromCsvAsync
-                // У методі ImportTransactionsFromCsvAsync
-                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-                {
-                    HasHeaderRecord = true,
-                };
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture) { HasHeaderRecord = true };
 
                 using var reader = new StreamReader(fileStream);
                 using var csv = new CsvReader(reader, config);
 
-                // 1. Додаємо підтримку обох форматів (із секундами та без), 
-                // щоб програма була стійкою до різних файлів.
+                // Налаштування форматів дати...
                 var options = csv.Context.TypeConverterOptionsCache.GetOptions<DateTime>();
                 options.Formats = new[] { "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm" };
-
                 csv.Context.RegisterClassMap<TransactionMap>();
 
                 try
                 {
                     var transactions = csv.GetRecords<Transaction>().ToList();
+
+                    // ПРИВ'ЯЗКА: кожній транзакції призначаємо власника
+                    foreach (var t in transactions)
+                    {
+                        t.UserId = userId;
+                    }
+
                     await context.Transactions.AddRangeAsync(transactions);
                     return await context.SaveChangesAsync();
                 }
                 catch (Exception ex)
                 {
-                    // Виводимо опис внутрішньої помилки (InnerException), щоб побачити точну причину в консолі
-                    throw new InvalidOperationException($"Помилка: {ex.InnerException?.Message ?? ex.Message}", ex);
+                    throw new InvalidOperationException($"Помилка: {ex.Message}");
                 }
+            }
+        }
+
+        public async Task ClearPreviousDataAsync(int userId)
+        {
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<SalesDbContext>();
+
+                // Швидке видалення прямо в БД (ExecuteDelete)
+                await context.Transactions
+                    .Where(t => t.UserId == userId)
+                    .ExecuteDeleteAsync();
+
+                await context.SavedAnalyses
+                    .Where(a => a.UserId == userId)
+                    .ExecuteDeleteAsync();
+
+                // SaveChangesAsync тут вже не потрібен для ExecuteDelete, 
+                // бо команда виконується миттєво
             }
         }
     }
@@ -122,8 +138,6 @@ namespace SalesAnalysis.Data.Services
 
             // 5. Мапінг ціни за одиницю товару
             Map(m => m.UnitPrice).Name("UnitPrice");
-
-            Map(m => m.ProductName).Name("Description"); // Додаємо зчитування опису товару
 
             // 6. Обчислення доходу через власний конвертер
             // Значення Revenue не зчитується напряму з CSV,

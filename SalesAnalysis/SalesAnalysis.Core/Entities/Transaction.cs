@@ -6,7 +6,7 @@ namespace SalesAnalysis.Core.Entities
     public class Transaction
     {
         public int Id { get; set; }
-
+        public int UserId { get; set; } // ДОДАТИ ЦЕЙ РЯДОК
         public DateTime Date { get; set; }
 
         public string ProductId { get; set; }

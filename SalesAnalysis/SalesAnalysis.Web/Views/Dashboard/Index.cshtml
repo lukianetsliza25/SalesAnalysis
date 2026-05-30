@@ -171,7 +171,6 @@
             <p class="text-gray-500">Недостатньо даних для кластеризації.</p>
         }
     </div>
-
 </div>
 </body>
 
@@ -210,7 +209,6 @@ document.addEventListener("DOMContentLoaded", function () {
     spark("sparkCustomers", history.map(() => Math.random() * 100), "#7c3aed");
     spark("sparkSpend", history.map(v => v / 30000), "#f97316");
     spark("sparkFrequency", history.map(v => v / 70000), "#0d9488");
-    spark("sparkMonths", prediction, "#dc2626");
 
 
     /* ------- MAIN FORECAST CHART ------- */
@@ -237,55 +235,78 @@ document.addEventListener("DOMContentLoaded", function () {
 }
 
 // історія починається з січня 2024
-const historyLabels = generateMonthLabels(2024, 1, history.length);
+    // Змінюємо початковий рік на 2023 (згідно з вашим CSV)
+    const historyLabels = generateMonthLabels(2023, 1, history.length);
 
-// визначаємо, з якого місяця починається прогноз
-const startForecastMonth = (1 + history.length - 1) % 12 + 1;
-const startForecastYear = 2024 + Math.floor((history.length) / 12);
+    // Визначаємо початок прогнозу
+    const totalMonths = history.length;
+    const startForecastMonth = (1 + totalMonths - 1) % 12 + 1;
+    const startForecastYear = 2023 + Math.floor(totalMonths / 12);
 
-// генеруємо прогноз
-const forecastLabels = generateMonthLabels(startForecastYear, startForecastMonth, prediction.length);
+    const forecastLabels = generateMonthLabels(startForecastYear, startForecastMonth, prediction.length);
+    const labels = [...historyLabels, ...forecastLabels];
 
-// фінальні підписи
-const labels = [...historyLabels, ...forecastLabels];
+    // Щоб лінія прогнозу з'єднувалася з історією, додаємо останню точку історії в початок прогнозу
+    const lastHistoryPoint = history[history.length - 1];
+    const displayPrediction = [
+        ...Array(history.length - 1).fill(null),
+        lastHistoryPoint,
+        ...prediction
+    ];
 
     const forecastData = [
         ...history,
         ...Array(history.length).fill(null).map((_, i) => prediction[i] ?? null)
     ];
 
-    new Chart(document.getElementById("salesChart"), {
-        type: "line",
-        data: {
-            labels,
-            datasets: [
-                {
-                    label: "Історичний Дохід",
-                    data: history,
-                    borderColor: "rgb(59,130,246)",
-                    backgroundColor: "rgba(59,130,246,0.15)",
-                    fill: true,
-                    tension: 0.25,
+        const canvasMain = document.getElementById("salesChart");
+    if (canvasMain) {
+        // З'єднуємо історію з прогнозом (остання точка історії + прогноз)
+        const displayPrediction = [
+            ...Array(history.length - 1).fill(null),
+            history[history.length - 1],
+            ...prediction
+        ];
+
+        new Chart(canvasMain, {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "Історичний Дохід",
+                        data: history,
+                        borderColor: "rgb(59,130,246)",
+                        backgroundColor: "rgba(59,130,246,0.15)",
+                        fill: true,
+                        tension: 0.3
+                    },
+                    {
+                        label: "Прогноз ML.NET",
+                        data: displayPrediction, // Використовуємо з'єднаний масив
+                        borderColor: "rgb(239,68,68)",
+                        borderDash: [5, 5],
+                        fill: false,
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: "top" }
                 },
-                {
-                    label: "Прогноз ML.NET",
-                    data: [...Array(history.length).fill(null), ...prediction],
-                    borderColor: "rgb(239,68,68)",
-                    borderDash: [5, 5],
-                    fill: false,
-                    tension: 0.25,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        ticks: {
+                            callback: function(value) { return value.toLocaleString() + ' ₴'; }
+                        }
+                    }
                 }
-            ]
-        },
-        options: {
-            responsive: true,
-            scales: { y: { beginAtZero: true }},
-            plugins: {
-                legend: { position: "top" },
-                title: { display: true, text: "Історичні Продажі та Прогноз" }
             }
-        }
-    });
+        });
+    }
 
 });
 </script>

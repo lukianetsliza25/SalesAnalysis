@@ -6,11 +6,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 [NotMapped]
 public class SalesDataPoint
 {
-    [LoadColumn(0)]
-    public float TimeIndex { get; set; } // Часовий індекс (1, 2, 3...)
+    public float TimeIndex { get; set; }
 
-    [LoadColumn(1), ColumnName("Label")]
-    public float SalesAmount { get; set; } // Значення для прогнозування (Дохід)
+    public float MonthOfYear { get; set; }
+
+    [ColumnName("Label")]
+    public float SalesAmount { get; set; }
 }
 
 [NotMapped]

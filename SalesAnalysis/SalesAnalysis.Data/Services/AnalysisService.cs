@@ -1,265 +1,213 @@
-﻿// SalesAnalysis.Data/Services/AnalysisService.cs
+﻿//SalesAnalysis.Data/Services/AnalysisService.cs
 using Microsoft.EntityFrameworkCore;
 using SalesAnalysis.Data;
 using SalesAnalysis.Core.Models;
+using SalesAnalysis.Core.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-using Microsoft.Extensions.DependencyInjection;
-using SalesAnalysis.Core.Entities;
 using System.Text.Json;
 
 namespace SalesAnalysis.Data.Services
 {
     public class AnalysisService
     {
-        // Провайдер сервісів для створення області видимості DbContext
-        private readonly IServiceProvider _serviceProvider;
+        private readonly SalesDbContext _context;
 
-        // Конструктор з передаванням контейнера залежностей
-        public AnalysisService(IServiceProvider serviceProvider)
+        // Використовуємо пряму ін'єкцію контексту для стабільної роботи з БД
+        public AnalysisService(SalesDbContext context)
         {
-            _serviceProvider = serviceProvider;
-        }
-
-        // Допоміжний метод створення екземпляра SalesDbContext
-        // Використовується для коректного керування життєвим циклом контексту
-        private SalesDbContext GetContext()
-        {
-            return _serviceProvider
-                .CreateScope()
-                .ServiceProvider
-                .GetRequiredService<SalesDbContext>();
+            _context = context;
         }
 
         // -----------------------------------------------------
-        // Метод обчислення загального доходу
-        public async Task<decimal> GetTotalRevenueAsync()
+        // 1. Метод обчислення загального доходу користувача
+        public async Task<decimal> GetTotalRevenueAsync(int userId)
         {
-            using (var context = GetContext())
-            {
-                // Якщо транзакції відсутні — повертаємо 0
-                if (!await context.Transactions.AnyAsync())
-                {
-                    return 0m;
-                }
+            var query = _context.Transactions.Where(t => t.UserId == userId);
 
-                // Обчислення сумарного доходу на основі поля Revenue
-                return await Task.Run(() =>
-                    context.Transactions
-                           .AsEnumerable()
-                           .Sum(t => t.Revenue)
-                );
-            }
+            if (!await query.AnyAsync()) return 0m;
+
+            // Використовуємо SumAsync для ефективного обчислення на стороні БД
+            return await query.SumAsync(t => t.Revenue);
         }
 
         // -----------------------------------------------------
-        // Метод отримання загальної кількості транзакцій
-        public async Task<int> GetTotalTransactionsAsync()
+        // 2. Метод отримання загальної кількості транзакцій користувача
+        public async Task<int> GetTotalTransactionsAsync(int userId)
         {
-            using (var context = GetContext())
-            {
-                // Підрахунок кількості записів у таблиці транзакцій
-                return await context.Transactions.CountAsync();
-            }
+            return await _context.Transactions
+                .Where(t => t.UserId == userId)
+                .CountAsync();
         }
 
         // -----------------------------------------------------
-        // Метод формування RFM-даних для кластеризації клієнтів
-
-        public async Task<List<CustomerData>> GetCustomerClusteringDataAsync()
+        // 3. Метод формування RFM-даних для кластеризації клієнтів
+        public async Task<List<CustomerData>> GetCustomerClusteringDataAsync(int userId)
         {
-            using (var context = GetContext())
-            {
-                // Отримання всіх транзакцій з бази даних
-                var allTransactions = await context.Transactions.ToListAsync();
-
-                // Якщо дані відсутні — повертаємо порожній список
-                if (!allTransactions.Any())
-                {
-                    return new List<CustomerData>();
-                }
-
-                // Підготовка даних з коректним форматом дати
-                var transactionsWithParsedDates = allTransactions
-                    .Select(t => new
-                    {
-                        t.CustomerId,
-                        t.Revenue,
-                        Date = DateTime.Parse(t.Date.ToString())
-                    })
-                    .ToList();
-
-                // Визначення останньої дати в наборі даних
-                var latestDate = transactionsWithParsedDates.Max(t => t.Date);
-                var today = latestDate.AddDays(1);
-
-                // Групування транзакцій за клієнтами та обчислення RFM-метрик
-                var rfmData = transactionsWithParsedDates
-                    .GroupBy(t => t.CustomerId)
-                    .Select(g => new CustomerData
-                    {
-                        // Ідентифікатор клієнта
-                        CustomerId = g.Key,
-
-                        // Monetary: сумарні витрати клієнта
-                        TotalSpent = (float)g.Sum(t => t.Revenue),
-
-                        // Frequency: кількість транзакцій
-                        PurchaseFrequency = g.Count(),
-
-                        // Recency: кількість днів з моменту останньої покупки
-                        DaysSinceLastPurchase =
-                            (float)(today - g.Max(t => t.Date)).TotalDays
-                    })
-                    .ToList();
-
-                return rfmData;
-            }
-        }
-        // Метод агрегації продажів для КОНКРЕТНОГО товару
-        public async Task<List<SalesDataPoint>> GetMonthlySalesByProductAsync(string productId)
-        {
-            using var context = GetContext();
-            var all = await context.Transactions
-                .Where(t => t.ProductId == productId)
+            var allTransactions = await _context.Transactions
+                .Where(t => t.UserId == userId)
                 .ToListAsync();
 
-            if (!all.Any()) return new List<SalesDataPoint>();
+            if (!allTransactions.Any()) return new List<CustomerData>();
 
-            return all
-                .Select(t => new { t.Revenue, Date = t.Date })
+            // Визначаємо "сьогодні" як день після останньої транзакції для Recency
+            var latestDate = allTransactions.Max(t => t.Date);
+            var today = latestDate.AddDays(1);
+
+            return allTransactions
+                .GroupBy(t => t.CustomerId)
+                .Select(g => new CustomerData
+                {
+                    CustomerId = g.Key,
+                    // Monetary: сума витрат
+                    TotalSpent = (float)g.Sum(t => t.Revenue),
+                    // Frequency: кількість покупок
+                    PurchaseFrequency = g.Count(),
+                    // Recency: дні з останньої покупки
+                    DaysSinceLastPurchase = (float)(today - g.Max(t => t.Date)).TotalDays
+                })
+                .ToList();
+        }
+
+        // -----------------------------------------------------
+        // 4. Метод агрегації продажів за місяцями (для графіка та ML)
+        public async Task<List<SalesDataPoint>> GetMonthlySalesDataAsync(int userId)
+        {
+            var allTransactions = await _context.Transactions
+                .Where(t => t.UserId == userId)
+                .ToListAsync();
+
+            if (!allTransactions.Any()) return new List<SalesDataPoint>();
+
+            // 1. Знаходимо найсвіжішу дату транзакції в усьому датасеті
+            var maxDate = allTransactions.Max(t => t.Date);
+
+            // 2. Визначаємо останній можливий день для цього місяця (наприклад, для лютого — 28 або 29)
+            int daysInMaxMonth = DateTime.DaysInMonth(maxDate.Year, maxDate.Month);
+
+            // Групуємо дані по місяцях
+            var groupedMonths = allTransactions
+                .GroupBy(t => new { t.Date.Year, t.Date.Month })
+                .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
+                .ToList();
+
+            var result = new List<SalesDataPoint>();
+            int index = 1;
+
+            foreach (var g in groupedMonths)
+            {
+                // 3. ФІЛЬТРАЦІЯ: Якщо це останній місяць у датасеті І максимальний день менший за 25-26 число 
+                // (тобто місяць явно не закритий / містить лише кілька днів) — ми його пропускаємо.
+                // Також перевіряємо, чи це не поточний календарний місяць, який ще триває.
+                bool isLastMonthInDataset = (g.Key.Year == maxDate.Year && g.Key.Month == maxDate.Month);
+                bool isCurrentCalendarMonth = (g.Key.Year == DateTime.UtcNow.Year && g.Key.Month == DateTime.UtcNow.Month);
+
+                if (isLastMonthInDataset && (maxDate.Day < (daysInMaxMonth - 2) || isCurrentCalendarMonth))
+                {
+                    continue; // Пропускаємо цей неповний місяць
+                }
+
+                result.Add(new SalesDataPoint
+                {
+                    TimeIndex = index++,
+                    MonthOfYear = (float)g.Key.Month,
+                    SalesAmount = (float)g.Sum(t => t.Revenue)
+                });
+            }
+
+            return result;
+        }
+
+        // -----------------------------------------------------
+        // 5. Метод агрегації продажів для конкретного товару
+        public async Task<List<SalesDataPoint>> GetMonthlySalesByProductAsync(string productId, int userId)
+        {
+            var productTransactions = await _context.Transactions
+                .Where(t => t.ProductId == productId && t.UserId == userId)
+                .ToListAsync();
+
+            if (!productTransactions.Any()) return new List<SalesDataPoint>();
+
+            return productTransactions
                 .GroupBy(t => new { t.Date.Year, t.Date.Month })
                 .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
                 .Select((g, index) => new SalesDataPoint
                 {
                     TimeIndex = index + 1,
+                    MonthOfYear = (float)g.Key.Month,
                     SalesAmount = (float)g.Sum(t => t.Revenue)
                 })
                 .ToList();
         }
 
+        // -----------------------------------------------------
+        // 6. Метод обчислення розширених місячних KPI
+        public async Task<List<MonthlyKpiData>> GetMonthlyKpiDataAsync(int userId)
+        {
+            var all = await _context.Transactions
+                .Where(t => t.UserId == userId)
+                .ToListAsync();
 
+            if (!all.Any()) return new List<MonthlyKpiData>();
+
+            var grouped = all
+                .GroupBy(t => new { t.Date.Year, t.Date.Month })
+                .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
+                .Select(g => new MonthlyKpiData
+                {
+                    MonthIndex = $"{g.Key.Year}-{g.Key.Month:D2}",
+                    TotalRevenue = (float)g.Sum(x => x.Revenue),
+                    TotalTransactions = g.Count(),
+                    UniqueCustomers = g.Select(x => x.CustomerId).Distinct().Count()
+                })
+                .ToList();
+
+            // Розрахунок похідних метрик
+            foreach (var m in grouped)
+            {
+                m.AverageOrderValue = m.TotalTransactions > 0 ? m.TotalRevenue / m.TotalTransactions : 0;
+                m.CustomerSpend = m.UniqueCustomers > 0 ? m.TotalRevenue / m.UniqueCustomers : 0;
+                m.Frequency = m.UniqueCustomers > 0 ? (float)m.TotalTransactions / m.UniqueCustomers : 0;
+            }
+
+            return grouped;
+        }
+
+        // -----------------------------------------------------
+        // 7. Метод збереження результатів аналізу (Прогнозів/Кластерів)
         public async Task SaveAnalysisResultAsync(int userId, string productId, string type, object result)
         {
-            using var context = GetContext();
+            // Видаляємо попередній аналіз такого ж типу перед збереженням нового
+            var existing = _context.SavedAnalyses
+                .Where(a => a.UserId == userId && a.AnalysisType == type && a.ProductId == productId);
+
+            _context.SavedAnalyses.RemoveRange(existing);
+
             var saved = new SavedAnalysis
             {
                 UserId = userId,
-                ProductId = productId, // null якщо загальний аналіз
-                AnalysisType = type,   // наприклад "SalesForecast" або "Clustering"
+                ProductId = productId,
+                AnalysisType = type,
                 ResultJson = JsonSerializer.Serialize(result),
                 CreatedAt = DateTime.UtcNow
             };
 
-            context.SavedAnalyses.Add(saved);
-            await context.SaveChangesAsync();
-        }
-        // -----------------------------------------------------
-        // Метод агрегації продажів за місяцями
-
-        public async Task<List<SalesDataPoint>> GetMonthlySalesDataAsync()
-        {
-            using (var context = GetContext())
-            {
-                // Отримання всіх транзакцій
-                var allTransactions = await context.Transactions.ToListAsync();
-
-                // Якщо дані відсутні — повертаємо порожній список
-                if (!allTransactions.Any())
-                {
-                    return new List<SalesDataPoint>();
-                }
-
-                // Підготовка дат для групування
-                var transactionsWithParsedDates = allTransactions
-                    .Select(t => new
-                    {
-                        t.Revenue,
-                        Date = DateTime.Parse(t.Date.ToString())
-                    })
-                    .ToList();
-
-                // Групування транзакцій за роком і місяцем
-                // та формування часової осі у вигляді індексу
-                return transactionsWithParsedDates
-                    .GroupBy(t => new { t.Date.Year, t.Date.Month })
-                    .OrderBy(g => g.Key.Year)
-                    .ThenBy(g => g.Key.Month)
-                    .Select((g, index) => new SalesDataPoint
-                    {
-                        // Індекс періоду (використовується для прогнозування)
-                        TimeIndex = index + 1,
-
-                        // Сумарний обсяг продажів за місяць
-                        SalesAmount = (float)g.Sum(t => t.Revenue)
-                    })
-                    .ToList();
-            }
+            await _context.SavedAnalyses.AddAsync(saved);
+            await _context.SaveChangesAsync(); // Гарантоване збереження в БД
         }
 
         // -----------------------------------------------------
-        // Метод обчислення розширених місячних KPI
-        public async Task<List<MonthlyKpiData>> GetMonthlyKpiDataAsync()
+        // 8. Метод отримання останнього збереженого результату
+        public async Task<string> GetLastAnalysisResultAsync(int userId, string type)
         {
-            using var context = GetContext();
+            var analysis = await _context.SavedAnalyses
+                .Where(a => a.UserId == userId && a.AnalysisType == type)
+                .OrderByDescending(a => a.CreatedAt)
+                .FirstOrDefaultAsync();
 
-            // Отримання всіх транзакцій
-            var all = await context.Transactions.ToListAsync();
-            if (!all.Any()) return new List<MonthlyKpiData>();
-
-            // Групування даних за місяцями
-            var grouped = all
-                .Select(t => new
-                {
-                    t.Revenue,
-                    t.CustomerId,
-                    Date = DateTime.Parse(t.Date.ToString())
-                })
-                .GroupBy(t => new { t.Date.Year, t.Date.Month })
-                .OrderBy(g => g.Key.Year)
-                .ThenBy(g => g.Key.Month)
-                .Select(g => new MonthlyKpiData
-                {
-                    // Ідентифікатор місяця
-                    MonthIndex = $"{g.Key.Year}-{g.Key.Month}",
-
-                    // Загальний дохід
-                    TotalRevenue = (float)g.Sum(x => x.Revenue),
-
-                    // Кількість транзакцій
-                    TotalTransactions = g.Count(),
-
-                    // Кількість унікальних клієнтів
-                    UniqueCustomers =
-                        g.Select(x => x.CustomerId).Distinct().Count()
-                })
-                .ToList();
-
-            // Обчислення похідних KPI
-            foreach (var m in grouped)
-            {
-                // Середній чек
-                m.AverageOrderValue =
-                    m.TotalTransactions > 0
-                        ? m.TotalRevenue / m.TotalTransactions
-                        : 0;
-
-                // Середні витрати на клієнта
-                m.CustomerSpend =
-                    m.UniqueCustomers > 0
-                        ? m.TotalRevenue / m.UniqueCustomers
-                        : 0;
-
-                // Середня частота покупок
-                m.Frequency =
-                    m.UniqueCustomers > 0
-                        ? (float)m.TotalTransactions / m.UniqueCustomers
-                        : 0;
-            }
-
-            return grouped;
+            return analysis?.ResultJson;
         }
     }
 }

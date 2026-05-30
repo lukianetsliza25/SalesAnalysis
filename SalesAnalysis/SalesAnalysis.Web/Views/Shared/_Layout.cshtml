@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@* SalesAnalysis.Web/Views/Shared/_Layout.cshtml *@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -32,6 +33,33 @@
                           font-medium shadow transition flex items-center space-x-2">
                     <span>📁</span><span>Імпорт даних</span>
                 </a>
+                <ul class="flex items-center space-x-4">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            @* Шукаємо ім'я в клеймах. Якщо немає - показуємо Email *@
+                            <span class="text-gray-700 font-medium">
+                                Вітаю, @(User.FindFirst("FirstName")?.Value ?? User.Identity.Name)!
+                            </span>
+                        </li>
+                        <li class="nav-item">
+                            <form asp-controller="Account" asp-action="Logout" method="post">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="text-red-500 hover:text-red-700 transition font-semibold">
+                                    Вихід
+                                </button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a asp-controller="Account" asp-action="Auth" class="text-blue-600 hover:underline font-medium">
+                                Авторизація
+                            </a>
+                        </li>
+                    }
+                </ul>
             </div>
         </div>
     </nav>
